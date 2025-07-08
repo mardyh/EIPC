@@ -10,11 +10,12 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow-y: auto; /* allow regular scrolling */
+      overflow-y: auto; 
       font-family: 'Akzidenz Grotesk Light', sans-serif;
       background: white;
     }
 
+    /* styling for the header title */
     header {
       position: fixed;
       top: 0;
@@ -35,6 +36,7 @@
       font-size: 24px;
     }
 
+    /* styling for menu options on the right */
     nav {
       display: flex;
       align-items: center;
@@ -52,6 +54,7 @@
       color: black;
     }
 
+    /* styling for hamburger toggle icon */ 
     .hamburger {
       display: none;
       flex-direction: column;
@@ -76,6 +79,7 @@
       transform: rotate(-45deg) translate(5px, -5px);
     }
 
+    /* styling for mobile view navigation menu */
     .mobile-menu {
       display: none;
       position: fixed;
@@ -102,6 +106,7 @@
       text-transform: uppercase;
     }
 
+    /* styling for text sections */
     section {
       min-height: 100vh;
       display: flex;
@@ -127,6 +132,7 @@
       line-height: 1.5;
     }
 
+    /* styling for team images section*/
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -153,6 +159,7 @@
       color: #666;
     }
 
+    /* styling for previous members sections */
     .timeline-wrapper {
       overflow-x: auto;
       white-space: nowrap;
@@ -186,6 +193,7 @@
       margin-bottom: 4px;
     }
 
+    /* styling for bio pop up */
     .modal {
       display: none;
       position: fixed;
@@ -219,6 +227,66 @@
       color: black;
     }
 
+    /* styling for tic marks */
+    .tic {
+      position: fixed;
+      background: rgb(0, 0, 0);
+      z-index: 2000;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.5s;
+    }
+    .tic.top-center { top: 60px; left: 50%; width: 2px; height: 20px; transform: translateX(-50%); }
+    .tic.bottom-center { bottom: 0; left: 50%; width: 2px; height: 20px; transform: translateX(-50%); }
+    .tic.left-center { left: 0; top: 50%; width: 20px; height: 2px; transform: translateY(-50%); }
+    .tic.right-center { right: 0; top: 50%; width: 20px; height: 2px; transform: translateY(-50%); }
+
+    /* animations styling */ 
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.ttf') format('truetype');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.ttf') format('truetype');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.ttf') format('truetype');
+      font-weight: bold;
+    }
+
+    /* media queries for device responsiveness */
     @media (max-width: 768px) {
       nav { display: none; }
       .hamburger { display: flex; }
@@ -238,7 +306,6 @@
         text-align: center;
       }
     }
-
   </style>
 </head>
 
@@ -370,6 +437,11 @@
       <p id="modalBio"></p>
     </div>
   </div>
+
+  <div class="tic top-center"></div>
+  <div class="tic bottom-center"></div>
+  <div class="tic left-center"></div>
+  <div class="tic right-center"></div>
 
   <script>
     function toggleMenu() {
