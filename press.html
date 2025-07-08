@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Press - Empathy in Point Clouds</title>
+  <link rel="icon" href="images/icon.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      text-align: center;
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+    }
+
+    /* styling for the header title */ 
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: white;
+      color: black;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      padding: 0 20px;
+      justify-content: space-between;
+    }
+    .header-title {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    /* styling for menu options on the right */ 
+    nav {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    nav a {
+      color: grey;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: black;
+    }
+    nav a.active {
+      color: black;
+      pointer-events: none;
+    }
+
+    /* styling for hamburger toggle icon */ 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: black;
+    }
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    .hamburger div {
+      transition: all 0.3s ease;
+    }
+
+    /* styling for mobile view navigation menu */ 
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .mobile-nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    .mobile-nav a {
+      margin: 20px 0;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      text-transform: uppercase;
+    }
+    .mobile-nav a.active,
+    .mobile-nav a:hover {
+      color: black;
+    }
+
+    /* styling for website thumbnails  */
+    .embedded-wrapper {
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      border: 1px solid #ccc;
+      margin-top: 30px;
+      margin-left: 80px;
+      flex-direction: column;
+      align-items: left;
+      gap: 10px;
+    }
+    .embedded-wrapper img:hover {
+      opacity: 0.85;
+      cursor: pointer;
+    }
+    .embedded-main {
+      margin-top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      padding: 0 80px;
+      text-align: left;
+    }
+    .news-item {
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 20px;
+    }
+    .news-item img {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+      flex-shrink: 0;
+    }
+    .news-text h2 {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 20px;
+      margin: 0 0 10px;
+    }
+    .news-text p {
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+      font-size: 16px;
+      margin: 0 0 8px;
+      color: #444;
+    }
+    .news-date {
+      font-family: 'Akzidenz Grotesk Light Italic', sans-serif;
+      font-size: 14px;
+      color: #999;
+    }
+
+    /* styling for the filter menu section */ 
+    .filter-bar {
+      margin-top: 70px;
+      margin-bottom: 20px;
+    }
+    .filter-bar button {
+      background: none;
+      border: none;
+      color: grey;
+      margin: 0 12px;
+      font-size: 16px;
+      font-family: 'Akzidenz Grotesk Roman', sans-serif;
+      cursor: pointer;
+      transition: color 0.3s, border-bottom 0.3s;
+      padding-bottom: 4px;
+    }
+    .filter-bar button.active,
+    .filter-bar button:hover {
+      color: black;
+      border-bottom: 2px solid black;
+    }
+
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.ttf') format('truetype');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.ttf') format('truetype');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.ttf') format('truetype');
+      font-weight: bold;
+    }
+
+    /* media queries for device responsiveness */ 
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .mobile-nav.show {
+        display: flex;
+      }
+      .header-title {
+        font-size: 24px;
+      }
+      .embedded-main {
+        padding: 0 20px;
+      }
+      .news-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .news-text {
+        padding-top: 10px;
+      }
+      .news-text h2,
+      .news-text p,
+      .news-date {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html" style="text-decoration: none; color: black;">
+      <h1 class="header-title">Empathy in Point Clouds</h1>
+    </a>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav>
+      <a href="projects.html">PROJECTS</a>
+      <a href="press.html" class="active" >PRESS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+  </header>
+
+  <div class="mobile-nav" id="mobileMenu">
+    <a href="projects.html">PROJECTS</a>
+    <a href="press.html" class="active" >PRESS</a>
+    <a href="about.html">ABOUT</a>
+    <a href="contact.html">CONTACT</a>
+  </div>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="core">EVENTS</button>
+        <button class="filter-btn" data-filter="research">EXHIBITS</button>
+        <button class="filter-btn" data-filter="education">NEWS</button>
+    </div>
+    
+    <main class="embedded-main">
+      <div class="news-item" data-aos="fade-up">
+        <a href="https://taubmancollege.umich.edu/alumni/portico/" target="_blank">
+          <img src="images/portico-news.png" alt="Portico" />
+        </a>
+        <div class="news-text">
+          <h2>Portico Magazine</h2>
+          <p>Taubman College's Biannual Magazine</p>
+          <span class="news-date">Fall 2023</span>
+        </div>
+      </div>
+
+      <div class="news-item" data-aos="fade-up">
+        <a href="https://taubmancollege.umich.edu/research/clusters-and-labs/empathy-in-point-clouds-scan-lab/" target="_blank">
+          <img src="images/empathylab-news.png" alt="Empathy Lab" />
+        </a>
+        <div class="news-text">
+          <h2>Empathy in Point Clouds Scan Lab</h2>
+          <p>Taubman College Research Cluster Website</p>
+          <span class="news-date">Spring 2024</span>
+        </div>
+      </div>
+
+      <div class="news-item" data-aos="fade-up">
+        <a href="https://taubmancollege.umich.edu/portico/2024/09/06/scanning-sites-with-remote-sensing-technology/" target="_blank">
+          <img src="images/sensing-news.png" alt="Empathy Lab" />
+        </a>
+        <div class="news-text">
+          <h2>Scanning Sites with Remote Sensing Technology</h2>
+          <p>Taubman College Portico Feature</p>
+          <span class="news-date">Fall 2024</span>
+        </div>
+      </div>
+
+      <div class="news-item" data-aos="fade-up">
+        <a href="https://artsengine.engin.umich.edu/previous_projects/point-cloud-vr/" target="_blank">
+          <img src="images/controller-news.png" alt="Empathy Lab" />
+        </a>
+        <div class="news-text">
+          <h2>Controller-Free Point Cloud VR</h2>
+          <p>Arts Engine Feature</p>
+          <span class="news-date"> Fall 2024</span>
+        </div>
+      </div>
+
+      <div class="news-item" data-aos="fade-up">
+        <a href="https://www.linkedin.com/posts/taubman-college-of-architecture-and-urban-planning_farotechnologies-lidar-architecture-activity-7184271669430001664-qfLe/" target="_blank">
+          <img src="images/linkedin-news.jpeg" alt="Empathy Lab" />
+        </a>
+        <div class="news-text">
+          <h2>Partnership with FARO Technologies</h2>
+          <p>Taubman College LinkedIn Post</p>
+          <span class="news-date">Fall 2024</span>
+        </div>
+      </div>
+    </main>
+
+    <script>
+        function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburger = document.querySelector('.hamburger');
+        
+        mobileMenu.classList.toggle('show');
+        hamburger.classList.toggle('active');
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true
+      });
+    </script>
+</body>
+</html>
+

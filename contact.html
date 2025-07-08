@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Empathy in Point Clouds</title>
+  <link rel="icon" href="images/icon.png" type="image/png">
+  <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      background: #f4f4f4;
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* styling for the header title */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0; 
+      right: 0;
+      height: 60px;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1001;
+    }
+    .header-title {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 24px;
+      text-decoration: none;
+      color: black;
+    }
+
+    /* styling for menu options on the right */
+    nav {
+      display: flex;
+      gap: 15px;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+    }
+    nav a {
+      color: grey;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    nav a:hover,
+    nav a.active {
+      color: black;
+    }
+
+    /* styling for hamburger toggle icon */ 
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      position: relative;
+      z-index: 1002;
+    }
+    .hamburger div {
+      position: absolute;
+      height: 3px;
+      width: 25px;
+      background: black;
+      transition: 0.4s ease;
+      left: 0;
+    }
+    .hamburger div:nth-child(1) { top: 0; }
+    .hamburger div:nth-child(2) { top: 8px; }
+    .hamburger div:nth-child(3) { top: 16px; }
+    .hamburger.open div:nth-child(1) { transform: rotate(45deg); top: 11px; }
+    .hamburger.open div:nth-child(2) { opacity: 0; }
+    .hamburger.open div:nth-child(3) { transform: rotate(-45deg); top: 11px; }
+
+    /* styling for mobile view navigation menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      background: white;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .mobile-menu.show { display: flex; }
+    .mobile-menu a {
+      margin: 20px 0;
+      font-size: 20px;
+      text-decoration: none;
+      color: black;
+      text-transform: uppercase;
+    }
+
+     /* styling for image loop and main title */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+    .image-frame {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      animation: moveHeroUp 2s ease forwards;
+      animation-delay: 2s;
+      z-index: 5;
+    }
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease;
+    }
+    .hero-contact-title {
+      position: absolute;
+      bottom: 10%; 
+      left: 0;
+      right: 0;
+      text-align: center;
+      transform: translateY(100%);
+      color: black;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      opacity: 0;
+      font-size: 120px;
+      z-index: 10;
+      animation: slideTitleUp 2s ease forwards;
+      animation-delay: 2s;
+      transform-origin: center bottom;
+    }
+
+    /* styling for contact section */
+    main {
+      padding: 120px 20px 50px;
+      text-align: center;
+    }
+    main p {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 1s;
+    }
+    .contact-social {
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 0.5s;
+    }
+    .contact-social a {
+      margin: 0 15px;
+      font-size: 24px;
+      color: black;
+      transition: color 0.3s;
+    }
+    .contact-social a:hover { color: grey; }
+    .final-contact {
+      background: #e0e0e0;
+      padding: 60px 20px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 2s;
+    }
+    .final-contact h3 {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .final-contact p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    /* styling for side by side map and email form*/
+    .contact-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto 20px;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 1s;
+    }
+    .contact-form, .map-container {
+      flex: 1 1 50%;
+      max-width: 600px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    .contact-form {
+      padding: 30px;
+      text-align: left;
+    }
+    form label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px 12px; 
+      margin-bottom: 20px;
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    form button {
+      width: 100%;
+      background: black;
+      color: white;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      transition: background-color 0.3s;
+    }
+    form button:hover { background: grey; }
+    .map-container {
+      height: 500px;
+    }
+
+    /* styling for tic marks */
+    .tic {
+      position: fixed;
+      background: rgb(0, 0, 0);
+      z-index: 2000;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+      animation-delay: 2s;
+    }
+    .tic.top-center { top: 60px; left: 50%; width: 2px; height: 20px; transform: translateX(-50%); }
+    .tic.bottom-center { bottom: 0; left: 50%; width: 2px; height: 20px; transform: translateX(-50%); }
+    .tic.left-center { left: 0; top: 50%; width: 20px; height: 2px; transform: translateY(-50%); }
+    .tic.right-center { right: 0; top: 50%; width: 20px; height: 2px; transform: translateY(-50%); }
+
+    /* animation styling */
+    @keyframes moveHeroUp {
+      to {
+        transform: translate(-50%, calc(-50% - 120px)) scale(0.5);
+      }
+    }
+    @keyframes slideTitleUp {
+      from {
+        opacity: 0;
+        transform: translateY(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideTitleUpMobile {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 100%); 
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%); 
+      }
+    }
+
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.ttf') format('truetype');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.ttf') format('truetype');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.ttf') format('truetype');
+      font-weight: bold;
+    }
+
+    /* media queries for device responsiveness */
+    @media (max-width: 768px) {
+      .hero-contact-title {
+        font-size: 60px;
+        top: 60%;
+        left: 50%;
+        bottom: auto;
+        transform: translate(-50%, 100%); 
+        animation: slideTitleUpMobile 2s ease forwards;
+        animation-delay: 2s;
+        text-align: center;
+      }
+      nav { display: none; }
+      .hamburger { display: block; }
+      .contact-container {
+        flex-direction: column;
+      }
+      .contact-form, .map-container {
+        max-width: 100%;
+      }
+      .map-container {
+        height: 300px;
+      }
+      .final-contact h3 { font-size: 20px; }
+      .contact-social a { font-size: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html" class="header-title">Empathy in Point Clouds</a>
+    <div class="hamburger" onclick="toggleMobileMenu(this)">
+      <div></div><div></div><div></div>
+    </div>
+    <nav>
+      <a href="projects.html">PROJECTS</a>
+      <a href="press.html">PRESS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html" class="active">CONTACT</a>
+    </nav>
+  </header>
+
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="projects.html">PROJECTS</a>
+    <a href="press.html">PRESS</a>
+    <a href="about.html">ABOUT</a>
+    <a href="contact.html" class="active">CONTACT</a>
+  </div>
+
+  <section class="hero">
+    <div class="image-frame">
+      <img id="heroImage" src="images/contact-scanning.jpg" alt="hero">
+    </div>
+    <h1 class="hero-contact-title">Get In Touch</h1>
+  </section>
+
+  <main>
+    <p>If you have any questions or would like to stop by, please don't hesitate to contact us.</p>
+    <p>Hours: Open Monday to Friday from 10:00 a.m. to 6:00 p.m.</p>
+    <div class="contact-social">
+      <a href="mailto:eipc.scanlab@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.instagram.com/umich.taubmancollege/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+    <div class="contact-container">
+      <div class="contact-form">
+        <form action="mailto:eipc.scanlab@gmail.com" method="POST" enctype="text/plain">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2922.367531379278!2d-83.73749932367494!3d42.29076134306183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883cadb1de7995db%3A0xb5428ac4ef418fa6!2s2000%20Bonisteel%20Blvd%2C%20Ann%20Arbor%2C%20MI%2048109!5e0!3m2!1sen!2sus!4v1719332809276!5m2!1sen!2sus"
+          width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </main>
+
+  <div class="tic top-center"></div>
+  <div class="tic bottom-center"></div>
+  <div class="tic left-center"></div>
+  <div class="tic right-center"></div>
+
+  <script>
+    function toggleMobileMenu(button) {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('show');
+      button.classList.toggle('open');
+    }
+    const images = [
+      "images/contact-scanning.jpg",
+      "images/contact-scanlab.jpg",
+      "images/contact-visstudio.png"
+    ];
+    let current = 0;
+    const heroImage = document.getElementById("heroImage");
+    setInterval(() => {
+      current = (current + 1) % images.length;
+      const nextImage = new Image();
+      nextImage.src = images[current];
+      nextImage.onload = () => {
+        heroImage.style.opacity = 0;
+        setTimeout(() => {
+          heroImage.src = images[current];
+          heroImage.style.opacity = 1;
+        }, 200);
+      };
+    }, 900);
+  </script>
+</body>
+</html>
