@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Floating Project Page</title>
+  <style>
+    /* styling for the header title */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: transparent;
+      color: black;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      padding: 0 20px;
+      justify-content: space-between;
+    }
+    .header-title {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    /* styling for menu options on the right */
+    nav {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    nav a {
+      color: grey;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: black;
+    }
+    nav a.active {
+      color: black;
+      pointer-events: none;
+    }
+
+     .mobile-nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* styling for mobile view navigation menu */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .mobile-nav a {
+      margin: 20px 0;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      text-transform: uppercase;
+    }
+
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      transition: opacity 1s ease;
+    
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+    
+    }
+
+    .floating {
+      position: absolute;
+      width: 250px;
+      height: auto;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 2s ease-in;
+      will-change: transform;
+      cursor: pointer;
+      mix-blend-mode: multiply;
+    }
+
+    /* Fade out animation */
+    .fade-out {
+      animation: fadeOut 1s forwards;
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+     @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.ttf') format('truetype');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.ttf') format('truetype');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.ttf') format('truetype');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.ttf') format('truetype');
+      font-weight: bold;
+    }
+
+
+    /* Caption styles */
+    .caption {
+        position: absolute;
+        color: #333;
+        /* Removed background, padding, border-radius, shadow */
+      font-family: 'Akzidenz Grotesk Roman', sans-serif;
+        font-size: 14px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        white-space: nowrap;
+        user-select: none;
+    }
+#footer-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  transition: transform .3s ease-in-out;
+}
+
+.bar-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bar-lines div {
+  width: 35px;
+  height: 1.7px;
+  background-color: white;
+  border-radius: 1px;
+}
+
+#projects-overlay {
+  position: fixed;
+  top: 60px; /* Just below header (header height) */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  z-index: 998; /* below header (1000), above footer (999) */
+  transform: translateY(100%);
+  transition: transform .3s ease-in-out;
+  overflow-y: auto;
+}
+
+#projects-overlay.rising {
+  transform: translateY(0);
+}
+
+#footer-bar.rising {
+  transform: translateY(calc(-100vh + 60px + 30px));
+}
+
+
+  </style>
+</head>
+<div id="footer-bar" data-link="projects.html">
+  <div class="bar-lines">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+
+<body>
+<div id="projects-overlay">
+  <!-- Optional: You can replicate the projects page content here -->
+</div>
+
+<template id="image-template">
+  <img class="floating" src="" />
+</template>
+
+<script>
+  const FLOAT_SPEED = 0.5;
+  const WOBBLE_FREQ = 0.002;
+  const WOBBLE_MAG = 20;
+  const MAX_INSTANCES_PER_IMAGE = 1;
+  const SPAWN_INTERVAL = 1000;
+  const BOUNCE_MARGIN = 100;
+
+  const imageSources = [
+    "point_cloud_renders/AWT_constellation_blu_small.gif",
+	"point_cloud_renders/AssembleSound_constellation_blu_small.gif",
+	"point_cloud_renders/OR_constellation_blu_small.gif",
+	"point_cloud_renders/MichiganStadium_constellation_blu_small.gif",
+  "point_cloud_renders/HillAuditorium_anchor.gif"
+  ];
+
+  const imageLinks = [
+    "windtunnel.html",
+    "hill.html",
+    "OR3.html",
+    "stadium.html",
+    "hill.html",
+  ];
+
+  const imageCaptions = [
+    "Aerospace Wind Tunnel Dome",
+    "Hill Auditorium",
+    "UofM Frankel Cardiovascular Care Center ",
+    "Michigan Stadium",
+    "Hill Auditorium"
+  ];
+
+  const floaters = [];
+  const imageCounts = {};
+  imageSources.forEach(src => imageCounts[src] = 0);
+  const template = document.getElementById('image-template');
+  let time = 0;
+
+  function createFloater(src, x, y, dx, dy, index) {
+    if (imageCounts[src] >= MAX_INSTANCES_PER_IMAGE) return false;
+
+    const imgEl = template.content.firstElementChild.cloneNode(true);
+    imgEl.src = src;
+    document.body.appendChild(imgEl);
+
+    const captionEl = document.createElement('div');
+    captionEl.className = 'caption';
+    captionEl.textContent = imageCaptions[index] || '';
+    document.body.appendChild(captionEl);
+
+    const phaseX = Math.random() * Math.PI * 2;
+    const phaseY = Math.random() * Math.PI * 2;
+
+    const floater = {
+      el: imgEl,
+      captionEl,
+      src,
+      x,
+      y,
+      dx,
+      dy,
+      phaseX,
+      phaseY,
+      paused: false
+    };
+    floaters.push(floater);
+    imageCounts[src]++;
+
+    requestAnimationFrame(() => { imgEl.style.opacity = 1; });
+
+    imgEl.style.pointerEvents = "auto";
+
+    imgEl.addEventListener('mouseenter', () => {
+      floater.paused = true;
+      captionEl.style.opacity = 1;
+    });
+    imgEl.addEventListener('mouseleave', () => {
+      floater.paused = false;
+      captionEl.style.opacity = 0;
+    });
+
+    const url = (index !== -1) ? imageLinks[index] : 'default.html';
+   imgEl.addEventListener('click', () => {
+  document.body.classList.add('fade-out');
+  setTimeout(() => {
+    window.location.href = url;
+  }, 500); // Match your fade-out time
+});
+
+
+    return true;
+  }
+
+  function spawnFromEdge() {
+    const src = imageSources[Math.floor(Math.random() * imageSources.length)];
+    if (imageCounts[src] >= MAX_INSTANCES_PER_IMAGE) return;
+
+    const side = Math.floor(Math.random() * 4);
+    let x, y, dx, dy;
+    const buffer = 200;
+
+    switch (side) {
+      case 0:
+        x = Math.random() * window.innerWidth;
+        y = -buffer;
+        dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        dy = Math.random() * FLOAT_SPEED;
+        break;
+      case 1:
+        x = window.innerWidth + buffer;
+        y = Math.random() * window.innerHeight;
+        dx = -Math.random() * FLOAT_SPEED;
+        dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        break;
+      case 2:
+        x = Math.random() * window.innerWidth;
+        y = window.innerHeight + buffer;
+        dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        dy = -Math.random() * FLOAT_SPEED;
+        break;
+      case 3:
+        x = -buffer;
+        y = Math.random() * window.innerHeight;
+        dx = Math.random() * FLOAT_SPEED;
+        dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        break;
+    }
+
+    const srcIndex = imageSources.indexOf(src);
+    createFloater(src, x, y, dx, dy, srcIndex);
+  }
+
+  function animate() {
+    time += 1;
+
+    floaters.forEach(f => {
+      if (!f.paused) {
+        f.dx += (Math.random() - 0.5) * 0.01;
+        f.dy += (Math.random() - 0.5) * 0.01;
+
+        f.x += f.dx;
+        f.y += f.dy;
+      }
+
+      const wobbleX = Math.sin(time * WOBBLE_FREQ + f.phaseX) * WOBBLE_MAG;
+      const wobbleY = Math.cos(time * WOBBLE_FREQ + f.phaseY) * WOBBLE_MAG;
+
+      const imgX = f.x + wobbleX;
+      const imgY = f.y + wobbleY;
+
+      f.el.style.transform = `translate(${imgX}px, ${imgY}px)`;
+
+      // Position caption below image with a small vertical gap
+      const rect = f.el.getBoundingClientRect();
+      const captionX = imgX + rect.width / 2 - f.captionEl.offsetWidth / 2;
+      const captionY = imgY + rect.height + 6;
+      f.captionEl.style.transform = `translate(${captionX}px, ${captionY}px)`;
+
+      // Bounce logic
+      if (rect.left < -BOUNCE_MARGIN && f.dx < 0) f.dx *= -1;
+      if (rect.right > window.innerWidth + BOUNCE_MARGIN && f.dx > 0) f.dx *= -1;
+      if (rect.top < -BOUNCE_MARGIN && f.dy < 0) f.dy *= -1;
+      if (rect.bottom > window.innerHeight + BOUNCE_MARGIN && f.dy > 0) f.dy *= -1;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  // Initial spawn of 4-6 images
+  const initialCount = 4 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < initialCount; i++) {
+    const src = imageSources[i % imageSources.length];
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+    const dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+    const dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+    createFloater(src, x, y, dx, dy, i);
+  }
+
+  // Continuous spawning from edges
+  setInterval(() => {
+    const spawnCount = 1 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < spawnCount; i++) {
+      spawnFromEdge();
+    }
+  }, SPAWN_INTERVAL);
+
+  animate();
+
+
+const footerBar = document.getElementById("footer-bar");
+const projectsOverlay = document.getElementById("projects-overlay");
+
+footerBar.addEventListener("click", () => {
+  footerBar.classList.add("rising");
+  projectsOverlay.classList.add("rising");
+
+  // Optional: fade out floaters/captions for cleaner look
+  document.querySelectorAll(".floating").forEach(el => el.style.opacity = 0);
+  document.querySelectorAll(".caption").forEach(el => el.style.opacity = 0);
+
+  // Navigate after animation completes (match with transition duration)
+  setTimeout(() => {
+    window.location.href = footerBar.dataset.link;
+  }, 350);
+});
+
+
+
+</script>
+
+<header>
+    <a href="index.html" style="text-decoration: none; color: black;">
+      <h1 class="header-title">Empathy in Point Clouds</h1>
+    </a>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav>
+      <a href="projects.html" class="active">PROJECTS</a>
+      <a href="press.html">PRESS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+  </header>
+</body>
+</html>
