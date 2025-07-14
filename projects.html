@@ -113,7 +113,7 @@
 
     /* styling for filter menu*/
     .filter-bar {
-      margin-top: 120px;
+      margin-top: 70px;
       margin-bottom: 20px;
     }
 
@@ -170,56 +170,6 @@
       font-family: 'Akzidenz Grotesk Roman', sans-serif;
     }
 
-       #black-bar {
-      position: fixed;
-      top: 60px; /* height of your header */
-      left: 0;
-      right: 0;
-      height: 30px;
-      background-color: black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1001; /* above header */
-      transition: transform 1s cubic-bezier(0.4, 0, 1, 1);
-}
-
-  .bar-lines {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .bar-lines div {
-    width: 35px;
-    height: 1.7px;
-    background-color: white;
-    border-radius: 1px;
-  }
-
-  body.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  /* Match the transition in floating_proj.html */
-  body {
-    transition: opacity 1s ease;
-  }
-
-  /* Black bar slides DOWN like footer bar slides UP */
-    #black-bar.lowering {
-      transform: translateY(calc(100vh - 90px));
-      transition: transform 0.3s ease-in-out;
-    }
-
-  /* Projects overlay slides down like floating_proj's rising class (reversed) */
-    #page-wrapper.lowering-page {
-      transform: translateY(calc(100vh));
-      transition: transform 0.3s ease-in-out;
-      overflow: hidden;
-    }
-
-
     /* styling for animation */
     @keyframes slideUpFadeIn {
       0% {
@@ -232,35 +182,35 @@
       }
     }
 
-    /* font styling */
+    /* font styling */ 
     @font-face {
       font-family: 'Akzidenz Grotesk Italic';
-      src: url('fonts/Akzidenz Grotesk Italic.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
       font-style: italic;
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light Bold Italic';
-      src: url('fonts/Akzidenz Grotesk Light Bold Italic.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
       font-style: italic;
       font-weight: bold;
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light Bold';
-      src: url('fonts/Akzidenz Grotesk Light Bold.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
       font-weight: bold;
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light Italic';
-      src: url('fonts/Akzidenz Grotesk Light Italic.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
       font-style: italic;
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light';
-      src: url('fonts/Akzidenz Grotesk Light.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Roman';
-      src: url('fonts/Akzidenz Grotesk Roman.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
       font-weight: bold;
     }
 
@@ -311,16 +261,6 @@
       <a href="contact.html">CONTACT</a>
     </nav>
   </header>
-
-   <div id="black-bar" data-link="projects.html" style="cursor:pointer;">
-    <div class="bar-lines">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-
-    <div id="page-wrapper">
 
   <div class="mobile-nav" id="mobileMenu">
     <a href="projects.html" class="active">PROJECTS</a>
@@ -488,7 +428,6 @@
       </a>
     </div>
   </div>
-  </div>
 
   <script>
     const projectItems = document.querySelectorAll(".project-item");
@@ -515,18 +454,6 @@
       mobileMenu.classList.toggle('show');
       hamburger.classList.toggle('active');
     }
-
-    const blackBar = document.getElementById("black-bar");
-    const pageWrapper = document.getElementById("page-wrapper");
-
-blackBar.addEventListener("click", () => {
-  blackBar.classList.add("lowering");
-  pageWrapper.classList.add("lowering-page");
-
-  setTimeout(() => {
-    window.location.href = "floating_proj.html";
-  }, 700); // delayed to allow fade in to finish before navigation
-});
 
     window.addEventListener("load", () => {
       const projectItems = document.querySelectorAll(".project-item");
