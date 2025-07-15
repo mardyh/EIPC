@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Floating Project Page</title>
+  <title>Projects - Empathy in Point Clouds </title>
   <style>
     /* styling for the header title */
     header {
@@ -20,6 +20,7 @@
       padding: 0 20px;
       justify-content: space-between;
     }
+
     .header-title {
       font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       font-size: 24px;
@@ -101,7 +102,6 @@
   pointer-events: none;
   z-index: 10; /* Or something under header/footer */
 }
-
 
     /* styling for menu options on the right */
     nav {
@@ -258,28 +258,33 @@
       font-style: italic;
     }
     @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
       font-family: 'Akzidenz Grotesk Light Bold Italic';
-      src: url('fonts/Akzidenz Grotesk Light Bold Italic.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
       font-style: italic;
       font-weight: bold;
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light Bold';
-      src: url('fonts/Akzidenz Grotesk Light Bold.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
       font-weight: bold;
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light Italic';
-      src: url('fonts/Akzidenz Grotesk Light Italic.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
       font-style: italic;
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light';
-      src: url('fonts/Akzidenz Grotesk Light.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Roman';
-      src: url('fonts/Akzidenz Grotesk Roman.ttf') format('truetype');
+      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
       font-weight: bold;
     }
 
@@ -535,21 +540,22 @@ document.getElementById('floater-container').appendChild(captionEl);
 
   // Initial spawn of 4-6 images
   const initialCount = 4 + Math.floor(Math.random() * 3);
-for (let i = 0; i < initialCount; i++) {
-  const src = imageSources[i % imageSources.length];
-  const imgWidth = Math.min(window.innerWidth * 0.45, 250); // match CSS
-  const imgHeight = imgWidth * 0.75; // estimate aspect ratio
 
-  // Clamp spawn area so image is always fully visible
-  const x = Math.random() * (window.innerWidth - imgWidth);
-  const y = Math.random() * (window.innerHeight - imgHeight - 60 - 30);
-  const clampedX = Math.max(0, Math.min(x, window.innerWidth - imgWidth));
-  const clampedY = Math.max(0, Math.min(y, window.innerHeight - imgHeight - 60 - 30));
+  for (let i = 0; i < initialCount; i++) {
+    const src = imageSources[i % imageSources.length];
+    const imgWidth = Math.min(window.innerWidth * 0.45, 250); // match CSS
+    const imgHeight = imgWidth * 0.75; // estimate aspect ratio
 
-  const dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
-  const dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
-  createFloater(src, clampedX, clampedY, dx, dy, i);
-}
+    // Clamp spawn area so image is always fully visible
+    const x = Math.random() * (window.innerWidth - imgWidth);
+    const y = Math.random() * (window.innerHeight - imgHeight - 60 - 30);
+    const clampedX = Math.max(0, Math.min(x, window.innerWidth - imgWidth));
+    const clampedY = Math.max(0, Math.min(y, window.innerHeight - imgHeight - 60 - 30));
+
+    const dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+    const dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+    createFloater(src, clampedX, clampedY, dx, dy, i);
+  }
 
   // Continuous spawning from edges
   setInterval(() => {
