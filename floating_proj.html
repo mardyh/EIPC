@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Floating Project Page</title>
   <style>
     /* styling for the header title */
@@ -26,6 +27,81 @@
       display: flex;
       align-items: center;
     }
+
+      /* Caption styles */
+    .caption {
+        position: absolute;
+        color: #333;
+        /* Removed background, padding, border-radius, shadow */
+      font-family: 'Akzidenz Grotesk Roman', sans-serif;
+        font-size: 14px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        white-space: nowrap;
+        user-select: none;
+    }
+
+  #footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    transition: transform .3s ease-in-out;
+  }
+
+  .bar-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bar-lines div {
+    width: 35px;
+    height: 1.7px;
+    background-color: white;
+    border-radius: 1px;
+  }
+
+  #projects-overlay {
+    position: fixed;
+    top: 60px; /* Just below header (header height) */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    z-index: 998; /* below header (1000), above footer (999) */
+    transform: translateY(100%);
+    transition: transform .3s ease-in-out;
+    overflow-y: auto;
+  }
+
+  #projects-overlay.rising {
+    transform: translateY(0);
+  }
+
+  #footer-bar.rising {
+    transform: translateY(calc(-100vh + 60px + 30px));
+  }
+
+  #floater-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10; /* Or something under header/footer */
+}
+
 
     /* styling for menu options on the right */
     nav {
@@ -85,11 +161,9 @@
       margin: 0;
       padding: 0;
       background: white;
-      overflow: hidden;
       height: 100%;
       width: 100%;
       transition: opacity 1s ease;
-    
       font-family: 'Akzidenz Grotesk Light', sans-serif;
     
     }
@@ -104,6 +178,69 @@
       will-change: transform;
       cursor: pointer;
       mix-blend-mode: multiply;
+    }
+
+    @media (max-width: 600px) {
+  .floating {
+    width: 45vw;
+    max-width: 90vw;
+    min-width: 120px;
+  }
+}
+
+    /* styling for mobile view navigation menu */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .mobile-nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    .mobile-nav a {
+      margin: 20px 0;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      text-transform: uppercase;
+    }
+
+    /* styling for hamburger toggle icon */ 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: black;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
     }
 
     /* Fade out animation */
@@ -147,88 +284,82 @@
     }
 
 
-    /* Caption styles */
-    .caption {
-        position: absolute;
-        color: #333;
-        /* Removed background, padding, border-radius, shadow */
-      font-family: 'Akzidenz Grotesk Roman', sans-serif;
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .mobile-nav.show {
+        display: flex;
+      }
+      .container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+      .filter-bar {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+      }
+      .filter-bar button {
+        margin: 8px 6px;
         font-size: 14px;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        white-space: nowrap;
-        user-select: none;
+      }
+      .header-title {
+        font-size: 24px;
+      }
     }
-#footer-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30px;
-  background-color: rgb(0, 0, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 999;
-  transition: transform .3s ease-in-out;
-}
 
-.bar-lines {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.bar-lines div {
-  width: 35px;
-  height: 1.7px;
-  background-color: white;
-  border-radius: 1px;
-}
-
-#projects-overlay {
-  position: fixed;
-  top: 60px; /* Just below header (header height) */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: white;
-  z-index: 998; /* below header (1000), above footer (999) */
-  transform: translateY(100%);
-  transition: transform .3s ease-in-out;
-  overflow-y: auto;
-}
-
-#projects-overlay.rising {
-  transform: translateY(0);
-}
-
-#footer-bar.rising {
-  transform: translateY(calc(-100vh + 60px + 30px));
-}
-
+    
 
   </style>
+
 </head>
-<div id="footer-bar" data-link="projects.html">
-  <div class="bar-lines">
+<body>
+  <div id="footer-bar" data-link="projects.html">
+    <div class="bar-lines">
     <div></div>
     <div></div>
     <div></div>
   </div>
 </div>
-
-
-<body>
 <div id="projects-overlay">
   <!-- Optional: You can replicate the projects page content here -->
 </div>
+<div id="floater-container"></div>
 
 <template id="image-template">
   <img class="floating" src="" />
 </template>
+
+  <div id="vanta-bg"></div>
+<header>
+    <a href="index.html" style="text-decoration: none; color: black;">
+      <h1 class="header-title">Empathy in Point Clouds</h1>
+    </a>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav>
+      <a href="projects.html" class="active">PROJECTS</a>
+      <a href="press.html">PRESS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+  </header>
+
+  <div class="mobile-nav" id="mobileMenu">
+    <a href="projects.html" class="active">PROJECTS</a>
+    <a href="press.html">PRESS</a>
+    <a href="about.html">ABOUT</a>
+    <a href="contact.html">CONTACT</a>
+  </div>
+
+  
 
 <script>
   const FLOAT_SPEED = 0.5;
@@ -236,14 +367,16 @@
   const WOBBLE_MAG = 20;
   const MAX_INSTANCES_PER_IMAGE = 1;
   const SPAWN_INTERVAL = 1000;
-  const BOUNCE_MARGIN = 100;
+const isMobile = window.innerWidth <= 600;
+const BOUNCE_MARGIN = isMobile ? 30 : 100;
 
   const imageSources = [
     "point_cloud_renders/AWT_constellation_blu_small.gif",
 	"point_cloud_renders/AssembleSound_constellation_blu_small.gif",
 	"point_cloud_renders/OR_constellation_blu_small.gif",
 	"point_cloud_renders/MichiganStadium_constellation_blu_small.gif",
-  "point_cloud_renders/HillAuditorium_anchor.gif"
+  "point_cloud_renders/HillAuditorium_anchor.gif",
+  "point_cloud_renders/HillAuditorium_constellation_header_blu_small.gif"
   ];
 
   const imageLinks = [
@@ -252,6 +385,7 @@
     "OR3.html",
     "stadium.html",
     "hill.html",
+    "hill.html"
   ];
 
   const imageCaptions = [
@@ -259,6 +393,7 @@
     "Hill Auditorium",
     "UofM Frankel Cardiovascular Care Center ",
     "Michigan Stadium",
+    "Hill Auditorium",
     "Hill Auditorium"
   ];
 
@@ -273,12 +408,12 @@
 
     const imgEl = template.content.firstElementChild.cloneNode(true);
     imgEl.src = src;
-    document.body.appendChild(imgEl);
+document.getElementById('floater-container').appendChild(imgEl);
 
     const captionEl = document.createElement('div');
     captionEl.className = 'caption';
     captionEl.textContent = imageCaptions[index] || '';
-    document.body.appendChild(captionEl);
+document.getElementById('floater-container').appendChild(captionEl);
 
     const phaseX = Math.random() * Math.PI * 2;
     const phaseY = Math.random() * Math.PI * 2;
@@ -400,14 +535,21 @@
 
   // Initial spawn of 4-6 images
   const initialCount = 4 + Math.floor(Math.random() * 3);
-  for (let i = 0; i < initialCount; i++) {
-    const src = imageSources[i % imageSources.length];
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
-    const dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
-    const dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
-    createFloater(src, x, y, dx, dy, i);
-  }
+for (let i = 0; i < initialCount; i++) {
+  const src = imageSources[i % imageSources.length];
+  const imgWidth = Math.min(window.innerWidth * 0.45, 250); // match CSS
+  const imgHeight = imgWidth * 0.75; // estimate aspect ratio
+
+  // Clamp spawn area so image is always fully visible
+  const x = Math.random() * (window.innerWidth - imgWidth);
+  const y = Math.random() * (window.innerHeight - imgHeight - 60 - 30);
+  const clampedX = Math.max(0, Math.min(x, window.innerWidth - imgWidth));
+  const clampedY = Math.max(0, Math.min(y, window.innerHeight - imgHeight - 60 - 30));
+
+  const dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+  const dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+  createFloater(src, clampedX, clampedY, dx, dy, i);
+}
 
   // Continuous spawning from edges
   setInterval(() => {
@@ -418,6 +560,14 @@
   }, SPAWN_INTERVAL);
 
   animate();
+
+   function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+
+      mobileMenu.classList.toggle('show');
+      hamburger.classList.toggle('active');
+    }
 
 
 const footerBar = document.getElementById("footer-bar");
@@ -437,25 +587,8 @@ footerBar.addEventListener("click", () => {
   }, 350);
 });
 
-
-
 </script>
 
-<header>
-    <a href="index.html" style="text-decoration: none; color: black;">
-      <h1 class="header-title">Empathy in Point Clouds</h1>
-    </a>
-    <div class="hamburger" onclick="toggleMobileMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    <nav>
-      <a href="projects.html" class="active">PROJECTS</a>
-      <a href="press.html">PRESS</a>
-      <a href="about.html">ABOUT</a>
-      <a href="contact.html">CONTACT</a>
-    </nav>
-  </header>
+
 </body>
 </html>
