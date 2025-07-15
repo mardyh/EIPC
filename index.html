@@ -213,6 +213,12 @@
       animation: fadeInPipe 0.6s ease forwards;
       animation-delay: 1.7s;
     }
+    .email-line {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
 
     /* animation styling*/
     @keyframes fadeSlideUp {
@@ -295,6 +301,14 @@
       .email-section {
         padding-left: 0px;
       }
+      .pipe-separator {
+        display: none;
+      }
+      .email-line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
     }
   </style>
 </head>
@@ -329,11 +343,13 @@
       <p>Empathy in Point-Clouds (EIPC) crafts immersive, data-driven design workflows that reframe architecture within Spatial Justice, creating counter-narratives and vivid urban imaginaries through digital worldbuilding.</p>
       <div class="divider"></div>
     <div class="email-section">
-      <a href="mailto:eipc.scanlab@gmail.com">eipc.scanlab@gmail.com</a>
-      <span class="pipe-separator">|</span>
-      <a href="https://maps.app.goo.gl/H9mDWBUXWmm4iHbPA" target="_blank" style="color: white; text-decoration: none;">
-        42.2895754, -83.7170503
-      </a>
+      <div class="email-line">
+        <a href="mailto:eipc.scanlab@gmail.com">eipc.scanlab@gmail.com</a>
+        <span class="pipe-separator">|</span>
+        <a href="https://maps.app.goo.gl/H9mDWBUXWmm4iHbPA" target="_blank" style="color: white; text-decoration: none;">
+          42.2895754, -83.7170503
+        </a>
+      </div>
     </div>
     </div>
   </section>
