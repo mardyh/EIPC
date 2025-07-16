@@ -14,7 +14,6 @@
       font-family: 'Akzidenz Grotesk Light', sans-serif;
       background: white;
     }
-
     /* styling for the header title */
     header {
       position: fixed;
@@ -175,14 +174,15 @@
       flex: 0 0 auto;
       background: white;
       padding: 10px;
-      border: 0.5px solid #ccc;
       border-radius: 12px;
       min-width: 240px;
+      border: 0.5px solid #ccc;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      text-align: center;
     }
     .timeline-year {
-      font-weight: bold;
-      font-size: 20px;
+      font-family: 'Akzidenz Grotesk Roman', sans-serif;
+      font-size: 16px;
     }
     .timeline-item ul {
       list-style: none;
@@ -243,8 +243,8 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      z-index: -1;
-      pointer-events: none; 
+      z-index: -1; /* Sends it behind all other content */
+      pointer-events: none; /* Prevents any interaction */
     }
     .tic {
       position: absolute;
@@ -457,7 +457,7 @@
       <p id="modalBio"></p>
     </div>
   </div>
-  
+
   <script>
     function toggleMenu() {
       const menu = document.getElementById('mobileMenu');
