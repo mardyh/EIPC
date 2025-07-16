@@ -196,9 +196,17 @@
       animation: fadeInUp 1s ease forwards;
       animation-delay: 1s;
     }
-    .contact-form, .map-container {
+    .contact-form {
       flex: 1 1 50%;
-      max-width: 600px;
+      max-width: 480px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    .map-container {
+      flex: 1 1 50%;
+      max-width: 500px;
       background: white;
       border-radius: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -210,12 +218,12 @@
     }
     form label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       font-size: 16px;
     }
     form input, form textarea {
       width: 100%;
-      padding: 10px 12px; 
+      padding: 20px 12px; 
       margin-bottom: 20px;
       font-family: 'Akzidenz Grotesk Light', sans-serif;
       border: 1px solid #ccc;
@@ -226,7 +234,7 @@
       background: black;
       color: white;
       border: none;
-      padding: 12px;
+      padding: 10px;
       cursor: pointer;
       font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       transition: background-color 0.3s;
@@ -363,11 +371,13 @@
   </section>
 
   <main>
-    <p>If you have any questions or would like to stop by, please don't hesitate to contact us.</p>
+    <h3>If you have any questions or would like to stop by, please don't hesitate to contact us.</h3>
     <p>Hours: Open Monday to Friday from 10:00 a.m. to 6:00 p.m.</p>
     <div class="contact-social">
       <a href="mailto:eipc.scanlab@gmail.com"><i class="fa-solid fa-envelope"></i></a>
       <a href="https://www.instagram.com/umich.taubmancollege/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/school/taubman-college-of-architecture-and-urban-planning/posts/?feedView=all" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+      <a href="https://maps.app.goo.gl/93yAGNyPrFcCisp89" target="_blank"><i class="fa-solid fa-map"></i></a>
     </div>
     <div class="contact-container">
       <div class="contact-form">
