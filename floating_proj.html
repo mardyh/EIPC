@@ -34,14 +34,43 @@
         position: absolute;
         color: #333;
         /* Removed background, padding, border-radius, shadow */
-      font-family: 'Akzidenz Grotesk Roman', sans-serif;
-        font-size: 14px;
+      font-family: 'Akzidenz Grotesk Roman Light Bold', sans-serif;
+        font-size: 21px;
         pointer-events: none;
         opacity: 0;
         transition: opacity 0.3s ease;
         white-space: nowrap;
         user-select: none;
     }
+
+    .caption-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 250px; /* match image width */
+  margin: 0 auto;
+  text-align: center;
+}
+
+.caption-category {
+  display: block;
+  color: grey;
+  font-size: 14px;
+  font-family: 'Akzidenz Grotesk Roman', sans-serif;
+  text-transform: lowercase;
+  transition: color 0.3s ease;
+}
+
+.caption-category.active {
+  color: black;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+
+
+
+
+
 
   #footer-bar {
     position: fixed;
@@ -71,37 +100,37 @@
     border-radius: 1px;
   }
 
-  #projects-overlay {
-    position: fixed;
-    top: 60px; /* Just below header (header height) */
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: white;
-    z-index: 998; /* below header (1000), above footer (999) */
-    transform: translateY(100%);
-    transition: transform .3s ease-in-out;
-    overflow-y: auto;
-  }
+    #projects-overlay {
+      position: fixed;
+      top: 60px; /* Just below header (header height) */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 998; /* below header (1000), above footer (999) */
+      transform: translateY(100%);
+      transition: transform .3s ease-in-out;
+      overflow-y: auto;
+    }
 
-  #projects-overlay.rising {
-    transform: translateY(0);
-  }
+    #projects-overlay.rising {
+      transform: translateY(0);
+    }
 
-  #footer-bar.rising {
-    transform: translateY(calc(-100vh + 60px + 30px));
-  }
+    #footer-bar.rising {
+      transform: translateY(calc(-100vh + 60px + 30px));
+    }
 
-  #floater-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 10; /* Or something under header/footer */
-}
+    #floater-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 10; /* Or something under header/footer */
+    }
 
     /* styling for menu options on the right */
     nav {
@@ -181,12 +210,12 @@
     }
 
     @media (max-width: 600px) {
-  .floating {
-    width: 45vw;
-    max-width: 90vw;
-    min-width: 120px;
-  }
-}
+      .floating {
+        width: 45vw;
+        max-width: 90vw;
+        min-width: 120px;
+      }
+    }
 
     /* styling for mobile view navigation menu */
     .mobile-nav {
@@ -376,31 +405,43 @@ const isMobile = window.innerWidth <= 600;
 const BOUNCE_MARGIN = isMobile ? 30 : 100;
 
   const imageSources = [
-    "point_cloud_renders/AWT_constellation_blu_small.gif",
-	"point_cloud_renders/AssembleSound_constellation_blu_small.gif",
-	"point_cloud_renders/OR_constellation_blu_small.gif",
-	"point_cloud_renders/MichiganStadium_constellation_blu_small.gif",
-  "point_cloud_renders/HillAuditorium_anchor.gif",
-  "point_cloud_renders/HillAuditorium_constellation_header_blu_small.gif"
+    "point_cloud_renders/AssembleSound_constellation_anchor_blu_small.gif",
+	"point_cloud_renders/AWT_constellation_anchor_small.gif",
+	"point_cloud_renders/HillAuditorium_anchor_small.gif",
+	"point_cloud_renders/MichiganStadium_constellation_anchor_small.gif",
+  "point_cloud_renders/MIIBS_constellation_anchor_small.gif",
+  "point_cloud_renders/OR_constellation_anchor_small.gif",
+  "point_cloud_renders/Rackham_constellation_anchor_small.gif"
   ];
 
   const imageLinks = [
+    "grace.html",
     "windtunnel.html",
     "hill.html",
-    "OR3.html",
     "stadium.html",
-    "hill.html",
-    "hill.html"
+    "miibs.html",
+    "OR3.html",
+    "rackham.html",
   ];
 
-  const imageCaptions = [
-    "Aerospace Wind Tunnel Dome",
-    "Hill Auditorium",
-    "UofM Frankel Cardiovascular Care Center ",
-    "Michigan Stadium",
-    "Hill Auditorium",
-    "Hill Auditorium"
-  ];
+  // const imageCaptions = [
+  //   "Aerospace Wind Tunnel Dome",
+  //   "Hill Auditorium",
+  //   "UofM Frankel Cardiovascular Care Center ",
+  //   "Michigan Stadium",
+  //   "Hill Auditorium",
+  //   "Hill Auditorium"
+  // ];
+
+  const imageCategories = [
+  ["Education"],             // AWT
+  ["Public"], // AssembleSound
+  ["Education"],   // OR
+  ["Public"],                // Stadium
+  ["Preservation"],          // Hill
+  ["Education"] // Hill alt
+  ["Preservation"],          // Hill
+];
 
   const floaters = [];
   const imageCounts = {};
@@ -415,9 +456,22 @@ const BOUNCE_MARGIN = isMobile ? 30 : 100;
     imgEl.src = src;
 document.getElementById('floater-container').appendChild(imgEl);
 
-    const captionEl = document.createElement('div');
-    captionEl.className = 'caption';
-    captionEl.textContent = imageCaptions[index] || '';
+  const allCategories = ["Preservation", "Education", "Public"];
+const currentCategories = imageCategories[index] || [];
+
+const captionEl = document.createElement('div');
+captionEl.className = 'caption';
+
+captionEl.innerHTML = `
+  <div class="caption-row">
+    ${allCategories.map(cat => {
+      const isActive = currentCategories.includes(cat);
+      return `<span class="caption-category ${isActive ? 'active' : ''}">${cat}</span>`;
+    }).join('')}
+  </div>
+`;
+
+
 document.getElementById('floater-container').appendChild(captionEl);
 
     const phaseX = Math.random() * Math.PI * 2;
@@ -524,7 +578,7 @@ document.getElementById('floater-container').appendChild(captionEl);
 
       // Position caption below image with a small vertical gap
       const rect = f.el.getBoundingClientRect();
-      const captionX = imgX + rect.width / 2 - f.captionEl.offsetWidth / 2;
+      const captionX = imgX; // Because caption is same width as image (250px)
       const captionY = imgY + rect.height + 6;
       f.captionEl.style.transform = `translate(${captionX}px, ${captionY}px)`;
 
