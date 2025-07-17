@@ -286,7 +286,8 @@
   pointer-events: auto;
   cursor: pointer;
   position: absolute;
-  height: 90px;
+  height: auto;
+  width: 250px;
   will-change: transform;
 }
 .flyby:hover {
@@ -303,9 +304,6 @@
   pointer-events: auto;
   cursor: pointer;
 }
-
-
-
 
 .flyby-track-0 { top: 20%; }
 .flyby-track-1 { top: 50%; }
@@ -704,9 +702,9 @@ footerBar.addEventListener("click", () => {
   // fly by logic
   
 const flybyImages = {
-  0: [ 'images/flyby/focusScanner_small.png', 'images/flyby/focusScanner_small.png' ],
-  1: [ 'images/flyby/focusScanner_small.png', 'images/flyby/focusScanner_small.png' ],
-  2: [ 'images/flyby/focusScanner_small.png', 'images/flyby/focusScanner_small.png' ]
+  0: [ 'images/flyby/djiAir2s.png', 'images/flyby/faroFocus.png' ],
+  1: [ 'images/flyby/djiAir2s.png', 'images/flyby/faroFocus.png' ],
+  2: [ 'images/flyby/djiAir2s.png', 'images/flyby/faroFocus.png' ]
 };
 
 function launchFlyby(trackIndex) {
