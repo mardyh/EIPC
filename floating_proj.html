@@ -270,6 +270,67 @@
     .fade-out {
       animation: fadeOut 1s forwards;
     }
+
+#flyby-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+.flyby {
+  animation: flyby-right 8s ease-out forwards;
+  mix-blend-mode: multiply;
+  pointer-events: auto;
+  cursor: pointer;
+  position: absolute;
+  height: 90px;
+  will-change: transform;
+}
+.flyby:hover {
+  animation-play-state: paused;
+}
+
+#floater-container,
+#flyby-container {
+  pointer-events: none;
+}
+
+.floating,
+.flyby {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+
+
+
+.flyby-track-0 { top: 20%; }
+.flyby-track-1 { top: 50%; }
+.flyby-track-2 { top: 80%; }
+
+@keyframes flyby-with-wobble {
+  0% {
+    transform: translateX(-200px) translateY(0);
+  }
+  50% {
+    transform: translateX(calc(55vw)) translateY(-8px);
+  }
+  100% {
+    transform: translateX(120vw) translateY(0);
+  }
+}
+
+@keyframes flyby-right {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(120vw);
+  }
+}
     @keyframes fadeOut {
       from { opacity: 1; }
       to { opacity: 0; }
@@ -357,6 +418,7 @@
   <!-- Optional: You can replicate the projects page content here -->
 </div>
 <div id="floater-container"></div>
+<div id="flyby-container"></div>
 
 <template id="image-template">
   <img class="floating" src="" />
@@ -639,6 +701,41 @@ footerBar.addEventListener("click", () => {
     window.location.href = footerBar.dataset.link;
   }, 350);
 });
+  // fly by logic
+  
+const flybyImages = {
+  0: [ 'images/flyby/focusScanner_small.png', 'images/flyby/focusScanner_small.png' ],
+  1: [ 'images/flyby/focusScanner_small.png', 'images/flyby/focusScanner_small.png' ],
+  2: [ 'images/flyby/focusScanner_small.png', 'images/flyby/focusScanner_small.png' ]
+};
+
+function launchFlyby(trackIndex) {
+  const container = document.getElementById("flyby-container");
+  const imagePool = flybyImages[trackIndex];
+  const imageSrc = imagePool[Math.floor(Math.random() * imagePool.length)];
+
+  const img = document.createElement("img");
+  img.src = imageSrc;
+  img.className = `flyby flyby-track-${trackIndex}`;
+  img.style.left = "-200px";
+
+  img.addEventListener('click', () => {
+    window.location.href = "equipment.html";
+  });
+
+  container.appendChild(img);
+
+  // Remove after animation ends
+  img.addEventListener('animationend', () => {
+    img.remove();
+  });
+}
+
+// Pick 1 random track every 15 seconds
+setInterval(() => {
+  const track = Math.floor(Math.random() * 3);
+  launchFlyby(track);
+}, 8000); 
 
 </script>
 
