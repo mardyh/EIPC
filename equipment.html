@@ -1,9 +1,339 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>EIPC - Equipment</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Equipment - Empathy in Point Clouds</title>
+  <link rel="icon" href="images/icon.png" type="image/png">
+    <link rel="stylesheet" href="css/fade.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    html, body {
+      overflow-x: hidden;
+    }
+    body {
+      margin: 0;
+      background: white;
+      text-align: center;
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+    }
+
+    /* styling for the header title */ 
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: white;
+      color: black;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      padding: 0 20px;
+      justify-content: space-between;
+    }
+    .header-title {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    /* styling for menu options on the right */ 
+    nav {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    nav a {
+      color: grey;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: black;
+    }
+    nav a.active {
+      color: black;
+      pointer-events: none;
+    }
+
+    /* styling for hamburger toggle icon */ 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: black;
+    }
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    .hamburger div {
+      transition: all 0.3s ease;
+    }
+
+    /* styling for mobile view navigation menu */ 
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .mobile-nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    .mobile-nav a {
+      margin: 20px 0;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      text-transform: uppercase;
+    }
+    .mobile-nav a.active,
+    .mobile-nav a:hover {
+      color: black;
+    }
+
+    /* Container with thumbnail and items */
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .bag {
+      width: 300px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .bag:hover {
+        transform: scale(1.05);
+    }
+    .item {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+        transition: transform 0.6s ease, opacity 0.6s ease;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .item.show {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 2;
+    }
+
+    /* Unique transform directions */
+    .item1.show { transform: translate(-200px, -150px) scale(1); }
+    .item2.show { transform: translate(0px, -200px) scale(1); }
+    .item3.show { transform: translate(200px, -150px) scale(1); }
+
+
+    /* Catalogue section */
+    #catalogue {
+      padding: 60px 20px;
+      background: #f4f4f4;
+    }
+    #catalogue h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .card {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .card-title {
+      text-align: center;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
+      font-weight: bold;
+    }
+
+    /* media queries for device responsiveness */ 
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .mobile-nav.show {
+        display: flex;
+      }
+      .header-title {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>equipment page</h1>
+    <header>
+        <a href="index.html" style="text-decoration: none; color: black;">
+            <h1 class="header-title">Empathy in Point Clouds</h1>
+        </a>
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <a href="floating_proj.html">PROJECTS</a>
+            <a href="press.html">PRESS</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+    </header>
+
+    <div class="mobile-nav" id="mobileMenu">
+        <a href="floating_proj.html">PROJECTS</a>
+        <a href="press.html" class="active" >PRESS</a>
+        <a href="about.html">ABOUT</a>
+        <a href="contact.html">CONTACT</a>
+    </div>
+
+<!-- EQUIPMENT SECTION -->
+<div class="container">
+    <img src="images/rackham-thumbnail.jpg" alt="Thumbnail" class="bag" onclick="revealItems()">
+
+    <img src="images/rackham1.png" class="item item1" data-title="Isometric" onclick="scrollToCatalogue()">
+    <img src="images/rackham2.png" class="item item2" data-title="Front" onclick="scrollToCatalogue()">
+    <img src="images/rackham3.png" class="item item3" data-title="Section" onclick="scrollToCatalogue()">
+</div>
+
+<!-- CATALOGUE SECTION -->
+<section id="catalogue">
+  <h1>Equipment Catalogue</h1>
+  <div class="grid">
+    <div class="card">
+      <img src="images/rackham1.png" alt="Isometric">
+      <div class="card-title">Isometric</div>
+    </div>
+    <div class="card">
+      <img src="images/rackham2.png" alt="Front">
+      <div class="card-title">Front</div>
+    </div>
+    <div class="card">
+      <img src="images/rackham3.png" alt="Section">
+      <div class="card-title">Section</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCRIPT -->
+<script>
+  let itemsShown = false;
+
+  function revealItems() {
+    const items = document.querySelectorAll('.item');
+
+    if (!itemsShown) {
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.add('show');
+        }, index * 150); // Staggered delay
+      });
+    } else {
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.remove('show');
+        }, index * 150);
+      });
+    }
+
+    itemsShown = !itemsShown;
+  }
+
+  function scrollToCatalogue() {
+    document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+
 </body>
 </html>
