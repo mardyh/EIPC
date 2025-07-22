@@ -305,8 +305,11 @@
   cursor: pointer;
 }
 
-.flyby-track-0 { top: 20%; }
-.flyby-track-1 { top: 50%; }
+.flyby-track-0 { top: 0%; }
+.flyby-track-1 { top: 15%; }
+.flyby-track-2 { top: 30%; }
+.flyby-track-3 { top: 45%; }
+.flyby-track-4 { top: 60%; }
 
 @keyframes flyby-with-wobble {
   0% {
@@ -701,8 +704,12 @@ footerBar.addEventListener("click", () => {
   // fly by logic
   
 const flybyImages = {
-  0: [ 'images/flyby/djiAir2s.png', 'images/flyby/faroFocus.png', 'images/flyby/groundTargets.png' ],
-  1: [ 'images/flyby/djiAir2s.png', 'images/flyby/faroFocus.png', 'images/flyby/groundTargets.png' ],
+  0: [ 'images/flyby/djiAir2s.png' ],
+  1: [ 'images/flyby/djiAir2s.png' ],
+  2: [ 'images/flyby/djiAir2s.png'],
+  3: [ 'images/flyby/faroFocus.png'],
+  4: [ 'images/flyby/groundTargets.png' ],
+
 };
 
 function launchFlyby(trackIndex) {
@@ -739,21 +746,21 @@ function startFlybySpawning() {
   // First spawn after 10 seconds
   flybyTimeout = setTimeout(() => {
     if (document.visibilityState === 'visible') {
-      const track = Math.floor(Math.random() * 3);
+      const track = Math.floor(Math.random() * 5 );
       launchFlyby(track);
     }
 
     // Start recurring spawns every 65 seconds
     flybyInterval = setInterval(() => {
       if (document.visibilityState === 'visible') {
-        const track = Math.floor(Math.random() * 3);
+        const track = Math.floor(Math.random() * 5 );
         launchFlyby(track);
       }
-    }, 60000);
+    }, 40000);
 
     flybyTimeout = null; // Clear timeout tracker
 
-  }, 10000);
+  }, 1000);
 }
 
 // Function to stop spawning flybys
