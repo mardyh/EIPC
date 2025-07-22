@@ -134,36 +134,39 @@
       flex-direction: column;
     }
     .bag {
-      width: 300px;
+      width: 400px;
       transition: transform 0.3s ease;
       cursor: pointer;
       z-index: 1;
     }
     .bag:hover {
-        transform: scale(1.05);
+      transform: scale(1.05);
     }
     .item {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100px;
-        transform: translate(-50%, -50%) scale(0.5);
-        opacity: 0;
-        transition: transform 0.6s ease, opacity 0.6s ease;
-        pointer-events: none;
-        z-index: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+      cursor: pointer;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      pointer-events: none;
+      z-index: 0;
     }
-
     .item.show {
-        opacity: 1;
-        pointer-events: auto;
-        z-index: 2;
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
     }
 
     /* Unique transform directions */
-    .item1.show { transform: translate(-200px, -150px) scale(1); }
-    .item2.show { transform: translate(0px, -200px) scale(1); }
-    .item3.show { transform: translate(200px, -150px) scale(1); }
+    .item1.show { transform: translate(-350px, -150px) scale(1); }
+    .item2.show { transform: translate(-50px, -250px) scale(1); }
+    .item3.show { transform: translate(250px, -150px) scale(1); }
+    .item4.show { transform: translate(-350px, -10px) scale(1); }
+    .item5.show { transform: translate(250px, -10px) scale(1); }
+    .item6.show { transform: translate(-50px, 200px) scale(1); }
 
 
     /* Catalogue section */
@@ -279,11 +282,14 @@
 
 <!-- EQUIPMENT SECTION -->
 <div class="container">
-    <img src="images/rackham-thumbnail.jpg" alt="Thumbnail" class="bag" onclick="revealItems()">
+    <img src="images/case-equip.png" alt="Thumbnail" class="bag" onclick="revealItems()">
 
-    <img src="images/rackham1.png" class="item item1" data-title="Isometric" onclick="scrollToCatalogue()">
-    <img src="images/rackham2.png" class="item item2" data-title="Front" onclick="scrollToCatalogue()">
-    <img src="images/rackham3.png" class="item item3" data-title="Section" onclick="scrollToCatalogue()">
+    <img src="images/hat-equip.png" class="item item1" data-title="hats" onclick="scrollToCatalogue()">
+    <img src="images/faro-equip.png" class="item item2" data-title="faro" onclick="scrollToCatalogue()">
+    <img src="images/drone-equip.webp" class="item item3" data-title="drone" onclick="scrollToCatalogue()">
+    <img src="images/target-equip.png" class="item item4" data-title="target" onclick="scrollToCatalogue()">
+    <img src="images/headset-equip.webp" class="item item5" data-title="headset" onclick="scrollToCatalogue()">
+    <img src="images/projector-equip.png" class="item item6" data-title="Section" onclick="scrollToCatalogue()">
 </div>
 
 <!-- CATALOGUE SECTION -->
@@ -291,16 +297,28 @@
   <h1>Equipment Catalogue</h1>
   <div class="grid">
     <div class="card">
-      <img src="images/rackham1.png" alt="Isometric">
-      <div class="card-title">Isometric</div>
+      <img src="images/hat-equip.png" alt="hardhats">
+      <div class="card-title">Hard Hats</div>
     </div>
     <div class="card">
-      <img src="images/rackham2.png" alt="Front">
-      <div class="card-title">Front</div>
+      <img src="images/faro-equip.png" alt="lidar scanner">
+      <div class="card-title">Lidar Scanner</div>
     </div>
     <div class="card">
-      <img src="images/rackham3.png" alt="Section">
-      <div class="card-title">Section</div>
+      <img src="images/drone-equip.webp" alt="drone">
+      <div class="card-title">Drone</div>
+    </div>
+    <div class="card">
+      <img src="images/target-equip.png" alt="ground targets">
+      <div class="card-title">Ground Targets</div>
+    </div>
+    <div class="card">
+      <img src="images/headset-equip.webp" alt="vr headset">
+      <div class="card-title">VR Headset</div>
+    </div>
+    <div class="card">
+      <img src="images/projector-equip.png" alt="short-throw projector">
+      <div class="card-title">Short-Throw Projector</div>
     </div>
   </div>
 </section>
