@@ -281,7 +281,7 @@
 }
 
 .flyby {
-  animation: flyby-right 8s ease-out forwards;
+  animation: flyby-right 60s ease-out forwards;
   mix-blend-mode: multiply;
   pointer-events: auto;
   cursor: pointer;
@@ -730,13 +730,29 @@ function launchFlyby(trackIndex) {
 let flybyInterval = null;
 
 // Function to start spawning flybys
+// Function to start spawning flybys
+let flybyTimeout = null;
+
 function startFlybySpawning() {
-  if (flybyInterval) return; // Already running
-  flybyInterval = setInterval(() => {
+  if (flybyInterval || flybyTimeout) return; // Already scheduled
+
+  // First spawn after 10 seconds
+  flybyTimeout = setTimeout(() => {
     if (document.visibilityState === 'visible') {
       const track = Math.floor(Math.random() * 3);
       launchFlyby(track);
     }
+
+    // Start recurring spawns every 65 seconds
+    flybyInterval = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        const track = Math.floor(Math.random() * 3);
+        launchFlyby(track);
+      }
+    }, 60000);
+
+    flybyTimeout = null; // Clear timeout tracker
+
   }, 10000);
 }
 
