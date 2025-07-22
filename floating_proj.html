@@ -727,11 +727,39 @@ function launchFlyby(trackIndex) {
   });
 }
 
-// Pick 1 random track every 15 seconds
-setInterval(() => {
-  const track = Math.floor(Math.random() * 3);
-  launchFlyby(track);
-}, 8000); 
+let flybyInterval = null;
+
+// Function to start spawning flybys
+function startFlybySpawning() {
+  if (flybyInterval) return; // Already running
+  flybyInterval = setInterval(() => {
+    if (document.visibilityState === 'visible') {
+      const track = Math.floor(Math.random() * 3);
+      launchFlyby(track);
+    }
+  }, 8000);
+}
+
+// Function to stop spawning flybys
+function stopFlybySpawning() {
+  clearInterval(flybyInterval);
+  flybyInterval = null;
+}
+
+// Watch for tab visibility changes
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    startFlybySpawning();
+  } else {
+    stopFlybySpawning();
+  }
+});
+
+// Start spawning initially if page is visible
+if (document.visibilityState === 'visible') {
+  startFlybySpawning();
+}
+
 
 </script>
 
