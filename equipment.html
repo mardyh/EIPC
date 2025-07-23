@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Equipment - Empathy in Point Clouds</title>
   <link rel="icon" href="images/icon.png" type="image/png">
-    <link rel="stylesheet" href="css/fade.css" />
+  <link rel="stylesheet" href="css/fade.css" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     html, body {
@@ -18,7 +18,7 @@
       font-family: 'Akzidenz Grotesk Light', sans-serif;
     }
 
-    /* styling for the header title */ 
+    /* styling for the header title */
     header {
       position: fixed;
       top: 0;
@@ -36,12 +36,9 @@
     .header-title {
       font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       font-size: 24px;
-      height: 100%;
-      display: flex;
-      align-items: center;
     }
 
-    /* styling for menu options on the right */ 
+    /* styling for menu options on the right */
     nav {
       font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       display: flex;
@@ -53,12 +50,8 @@
       text-decoration: none;
       transition: color 0.3s;
     }
-    nav a:hover {
+    nav a:hover, nav a.active {
       color: black;
-    }
-    nav a.active {
-      color: black;
-      pointer-events: none;
     }
 
     /* styling for hamburger toggle icon */ 
@@ -73,6 +66,7 @@
       width: 25px;
       height: 3px;
       background-color: black;
+      transition: all 0.3s ease;
     }
     .hamburger.active div:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
@@ -83,11 +77,8 @@
     .hamburger.active div:nth-child(3) {
       transform: rotate(-45deg) translate(5px, -5px);
     }
-    .hamburger div {
-      transition: all 0.3s ease;
-    }
 
-    /* styling for mobile view navigation menu */ 
+    /* styling for mobile view navigation menu */
     .mobile-nav {
       display: none;
       flex-direction: column;
@@ -117,12 +108,8 @@
       font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       text-transform: uppercase;
     }
-    .mobile-nav a.active,
-    .mobile-nav a:hover {
-      color: black;
-    }
 
-    /* Container with thumbnail and items */
+    /* styling for equipment section*/
     .container {
       position: relative;
       width: 100%;
@@ -134,42 +121,80 @@
       flex-direction: column;
     }
     .bag {
-      width: 400px;
+      width: 500px;
       transition: transform 0.3s ease;
       cursor: pointer;
       z-index: 1;
-    }
-    .bag:hover {
-      transform: scale(1.05);
     }
     .item {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 100px;
       transform: translate(-50%, -50%) scale(0.5);
       opacity: 0;
       cursor: pointer;
       transition: transform 0.6s ease, opacity 0.6s ease;
       pointer-events: none;
       z-index: 0;
+      display: flex;
+      flex-direction: column-reverse; /* Reverse order so label is on top */
+      align-items: center;
+    }
+    .hover-label {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 14px;
+      color: black;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 4px 8px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .item:hover .hover-label {
+      opacity: 1;
     }
     .item.show {
       opacity: 1;
       pointer-events: auto;
       z-index: 2;
     }
-
-    /* Unique transform directions */
     .item1.show { transform: translate(-350px, -150px) scale(1); }
-    .item2.show { transform: translate(-50px, -250px) scale(1); }
+    .item2.show { transform: translate(-50px, -300px) scale(1); }
     .item3.show { transform: translate(250px, -150px) scale(1); }
     .item4.show { transform: translate(-350px, -10px) scale(1); }
     .item5.show { transform: translate(250px, -10px) scale(1); }
-    .item6.show { transform: translate(-50px, 200px) scale(1); }
+    .item6.show { transform: translate(-70px, 150px) scale(1); }
+    .equip-img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+    .case-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .toggle-button {
+      position: absolute;
+      top: 52%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      cursor: pointer;
+      color: black;
+      background: none; 
+      border: none;      
+      padding: 0;  
+      z-index: 3;
+      transition: text-decoration 0.3s ease;
+    }
+    .toggle-button:hover {
+      text-decoration: underline;
+    }
 
-
-    /* Catalogue section */
+    /* styling for catalogue section */
     #catalogue {
       padding: 60px 20px;
       background: #f4f4f4;
@@ -195,49 +220,34 @@
     .card:hover {
       transform: translateY(-5px);
     }
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
     .card-title {
       text-align: center;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       font-size: 16px;
       margin-top: 10px;
+    }
+    .card ul {
+      text-align: left;
+      padding-left: 20px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .card ul li {
+      margin-bottom: 5px;
     }
 
     /* font styling */ 
     @font-face {
-      font-family: 'Akzidenz Grotesk Italic';
-      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
-      font-style: italic;
-    }
-    @font-face {
-      font-family: 'Akzidenz Grotesk Light Bold Italic';
-      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
-      font-style: italic;
-      font-weight: bold;
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
     }
     @font-face {
       font-family: 'Akzidenz Grotesk Light Bold';
       src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
       font-weight: bold;
     }
-    @font-face {
-      font-family: 'Akzidenz Grotesk Light Italic';
-      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
-      font-style: italic;
-    }
-    @font-face {
-      font-family: 'Akzidenz Grotesk Light';
-      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
-    }
-    @font-face {
-      font-family: 'Akzidenz Grotesk Roman';
-      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
-      font-weight: bold;
-    }
 
-    /* media queries for device responsiveness */ 
+    /* Responsive styles */
     @media (max-width: 768px) {
       nav {
         display: none;
@@ -251,107 +261,161 @@
       .header-title {
         font-size: 24px;
       }
+      .mobile-menu a {
+        font-size: 18px;
+        margin: 15px 0;
+      }
+
+      /* Hides the equipment section on mobile */
+      .container {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
-    <header>
-        <a href="index.html" style="text-decoration: none; color: black;">
-            <h1 class="header-title">Empathy in Point Clouds</h1>
-        </a>
-        <div class="hamburger" onclick="toggleMobileMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <nav>
-            <a href="floating_proj.html">PROJECTS</a>
-            <a href="press.html">PRESS</a>
-            <a href="about.html">ABOUT</a>
-            <a href="contact.html">CONTACT</a>
-        </nav>
-    </header>
+  <header>
+    <a href="index.html" style="text-decoration: none; color: black;">
+      <h1 class="header-title">Empathy in Point Clouds</h1>
+    </a>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div><div></div><div></div>
+    </div>
+    <nav>
+      <a href="floating_proj.html">PROJECTS</a>
+      <a href="press.html">PRESS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+  </header>
 
-    <div class="mobile-nav" id="mobileMenu">
-        <a href="floating_proj.html">PROJECTS</a>
-        <a href="press.html" class="active" >PRESS</a>
-        <a href="about.html">ABOUT</a>
-        <a href="contact.html">CONTACT</a>
+  <div class="mobile-nav" id="mobileMenu">
+    <a href="floating_proj.html">PROJECTS</a>
+    <a href="press.html" class="active">PRESS</a>
+    <a href="about.html">ABOUT</a>
+    <a href="contact.html">CONTACT</a>
+  </div>
+
+  <!-- EQUIPMENT SECTION -->
+  <div class="container">
+    <div class="case-wrapper">
+      <img src="images/case-equip.png" alt="Thumbnail" class="bag">
+      <button class="toggle-button" onclick="revealItems()">EIPC Equipment</button>
     </div>
 
-<!-- EQUIPMENT SECTION -->
-<div class="container">
-    <img src="images/case-equip.png" alt="Thumbnail" class="bag" onclick="revealItems()">
-
-    <img src="images/hat-equip.png" class="item item1" data-title="hats" onclick="scrollToCatalogue()">
-    <img src="images/faro-equip.png" class="item item2" data-title="faro" onclick="scrollToCatalogue()">
-    <img src="images/drone-equip.webp" class="item item3" data-title="drone" onclick="scrollToCatalogue()">
-    <img src="images/target-equip.png" class="item item4" data-title="target" onclick="scrollToCatalogue()">
-    <img src="images/headset-equip.webp" class="item item5" data-title="headset" onclick="scrollToCatalogue()">
-    <img src="images/projector-equip.png" class="item item6" data-title="Section" onclick="scrollToCatalogue()">
-</div>
-
-<!-- CATALOGUE SECTION -->
-<section id="catalogue">
-  <h1>Equipment Catalogue</h1>
-  <div class="grid">
-    <div class="card">
-      <img src="images/hat-equip.png" alt="hardhats">
-      <div class="card-title">Hard Hats</div>
+    <div class="item item1">
+      <img src="images/hat-equip.png" class="equip-img" onclick="scrollToCatalogue()">
+      <span class="hover-label">Hard Hat</span>
     </div>
-    <div class="card">
-      <img src="images/faro-equip.png" alt="lidar scanner">
-      <div class="card-title">Lidar Scanner</div>
+    <div class="item item2">
+      <img src="images/faro-equip.png" class="equip-img" onclick="scrollToCatalogue()">
+      <span class="hover-label">LiDAR Scanner</span>
     </div>
-    <div class="card">
-      <img src="images/drone-equip.webp" alt="drone">
-      <div class="card-title">Drone</div>
+    <div class="item item3">
+      <img src="images/drone-equip.webp" class="equip-img" onclick="scrollToCatalogue()">
+      <span class="hover-label">Drone</span>
     </div>
-    <div class="card">
-      <img src="images/target-equip.png" alt="ground targets">
-      <div class="card-title">Ground Targets</div>
+    <div class="item item4">
+      <img src="images/target-equip.png" class="equip-img" onclick="scrollToCatalogue()">
+      <span class="hover-label">Ground Targets</span>
     </div>
-    <div class="card">
-      <img src="images/headset-equip.webp" alt="vr headset">
-      <div class="card-title">VR Headset</div>
+    <div class="item item5">
+      <img src="images/headset-equip.webp" class="equip-img" onclick="scrollToCatalogue()">
+      <span class="hover-label">VR Headset</span>
     </div>
-    <div class="card">
-      <img src="images/projector-equip.png" alt="short-throw projector">
-      <div class="card-title">Short-Throw Projector</div>
+    <div class="item item6">
+      <img src="images/projector-equip.png" class="equip-img" onclick="scrollToCatalogue()">
+      <span class="hover-label">Short-Throw Projector</span>
     </div>
   </div>
-</section>
 
-<!-- SCRIPT -->
-<script>
-  let itemsShown = false;
+  <!-- CATALOGUE SECTION -->
+  <section id="catalogue">
+    <h1>Equipment Catalogue</h1>
+    <div class="grid">
+      <div class="card">
+        <img src="images/hat-equip.png" alt="hardhats" class="equip-img">
+        <div class="card-title">Hard Hats</div>
+        <ul>
+          <li>Protective gear</li>
+          <li>Multiple sizes</li>
+          <li>OSHA certified</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img src="images/faro-equip.png" alt="lidar scanner" class="equip-img">
+        <div class="card-title">LiDAR Scanner</div>
+        <ul>
+          <li>High precision scanning</li>
+          <li>Tripod mountable</li>
+          <li>FARO Focus model</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img src="images/drone-equip.webp" alt="drone" class="equip-img">
+        <div class="card-title">Drone</div>
+        <ul>
+          <li>DJI Phantom 4 Pro</li>
+          <li>4K aerial video</li>
+          <li>Obstacle avoidance</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img src="images/target-equip.png" alt="ground targets" class="equip-img">
+        <div class="card-title">Ground Targets</div>
+        <ul>
+          <li>Used for scan alignment</li>
+          <li>Highly reflective</li>
+          <li>Portable and durable</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img src="images/headset-equip.webp" alt="vr headset" class="equip-img">
+        <div class="card-title">VR Headset</div>
+        <ul>
+          <li>Oculus Quest 2</li>
+          <li>Wireless capability</li>
+          <li>Immersive 3D experience</li>
+        </ul>
+      </div>
+      <div class="card">
+        <img src="images/projector-equip.png" alt="short-throw projector" class="equip-img">
+        <div class="card-title">Short-Throw Projector</div>
+        <ul>
+          <li>Compact setup</li>
+          <li>High lumen output</li>
+          <li>Ideal for exhibitions</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  function revealItems() {
-    const items = document.querySelectorAll('.item');
-
-    if (!itemsShown) {
-      items.forEach((item, index) => {
-        setTimeout(() => {
-          item.classList.add('show');
-        }, index * 150); // Staggered delay
-      });
-    } else {
-      items.forEach((item, index) => {
-        setTimeout(() => {
-          item.classList.remove('show');
-        }, index * 150);
-      });
+  <script>
+    let itemsShown = false;
+    function revealItems() {
+      const items = document.querySelectorAll('.item');
+      if (!itemsShown) {
+        items.forEach((item, index) => {
+          setTimeout(() => item.classList.add('show'), index * 150);
+        });
+      } else {
+        items.forEach((item, index) => {
+          setTimeout(() => item.classList.remove('show'), index * 150);
+        });
+      }
+      itemsShown = !itemsShown;
     }
 
-    itemsShown = !itemsShown;
-  }
+    function scrollToCatalogue() {
+      document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' });
+    }
 
-  function scrollToCatalogue() {
-    document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' });
-  }
-</script>
-
-
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('show');
+      document.querySelector('.hamburger').classList.toggle('active');
+    }
+  </script>
 </body>
 </html>
