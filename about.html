@@ -9,10 +9,12 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100vh;
-      overflow-y: auto; 
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: auto;
       font-family: 'Akzidenz Grotesk Light', sans-serif;
       background: white;
+      scroll-behavior: smooth;
     }
     /* styling for the header title */
     header {
@@ -121,6 +123,7 @@
       box-sizing: border-box;
     }
     section.in-view {
+      visibility: visible;
       opacity: 1;
       transform: translateY(0);
     }
@@ -165,14 +168,14 @@
     /* styling for previous members sections */
     .timeline-wrapper {
       overflow-x: auto;
+      overflow-y: visible; /* or overflow-y: unset; */
       white-space: nowrap;
-      padding-top: 10px;
       padding-bottom: 90px;
+      -webkit-overflow-scrolling: touch;
     }
     .timeline-horizontal {
       display: flex;
       gap: 30px;
-      padding: 10px;
       min-width: 400px;
     }
     .timeline-item {
@@ -197,6 +200,9 @@
     }
     .timeline-item ul li {
       margin-bottom: 4px;
+    }
+    #timeline {
+      padding-top: 90px;
     }
 
     /* styling for bio pop up */
