@@ -2,31 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Empathy in Point Clouds</title>
-  <link rel="icon" href="images/icon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects - Empathy in Point Clouds </title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Akzidenz Grotesk Light', sans-serif;
-      background: white;
-      color: white;
-      overflow-x: hidden;
-    }
+    /* styling for the header title */
     header {
       position: fixed;
       top: 0;
+      left: 0;
       right: 0;
-      width: 100%;
-      padding: 50px 70px;
+      height: 60px;
+      background-color: transparent;
+      color: black;
       display: flex;
       align-items: center;
       z-index: 1000;
+      padding: 0 20px;
+      justify-content: space-between;
+    }
+
+    .header-title {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+      /* Caption styles */
+    .caption {
+        position: absolute;
+        color: #333;
+        /* Removed background, padding, border-radius, shadow */
+      font-family: 'Akzidenz Grotesk Roman Light Bold', sans-serif;
+        font-size: 21px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        white-space: nowrap;
+        user-select: none;
+    }
+
+    .caption-row {
+      display: grid;
+      /* grid-template-columns: repeat(3, 2fr); */
+     /* width: 250px;  match image width */
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .caption-category {
+      display: block;
+      color: rgb(196, 193, 193);
+      font-size: 14px;
+      font-family: 'Akzidenz Grotesk Roman', sans-serif;
+      text-transform: lowercase;
+      transition: color 0.3s ease;
+    }
+
+    .caption-category.active {
+      color: black;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+  #footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    transition: transform .3s ease-in-out;
+  }
+
+  .bar-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bar-lines div {
+    width: 35px;
+    height: 1.7px;
+    background-color: white;
+    border-radius: 1px;
+  }
+
+    #projects-overlay {
+      position: fixed;
+      top: 60px; /* Just below header (header height) */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 998; /* below header (1000), above footer (999) */
+      transform: translateY(100%);
+      transition: transform .3s ease-in-out;
+      overflow-y: auto;
+    }
+
+    #projects-overlay.rising {
+      transform: translateY(0);
+    }
+
+    #footer-bar.rising {
+      transform: translateY(calc(-100vh + 60px + 30px));
+    }
+
+    #floater-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 10; /* Or something under header/footer */
     }
 
     /* styling for menu options on the right */
@@ -34,18 +131,116 @@
       font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       display: flex;
       align-items: center;
-      gap: 30px;
+      gap: 15px;
     }
     nav a {
+      color: grey;
       text-decoration: none;
-      color: white;
-      font-weight: 500;
-      border-bottom: 2px solid transparent;
-      transition: border 0.3s;
-      font-size: 18px;
+      transition: color 0.3s;
     }
     nav a:hover {
-      border-bottom: 2px solid white;
+      color: black;
+    }
+    nav a.active {
+      color: black;
+      pointer-events: none;
+    }
+
+     .mobile-nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* styling for mobile view navigation menu */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .mobile-nav a {
+      margin: 20px 0;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      text-transform: uppercase;
+    }
+
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      height: 100%;
+      width: 100%;
+      transition: opacity 1s ease;
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+    
+    }
+
+    .floating {
+      position: absolute;
+      width: auto;
+      height: 230px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 2s ease-in;
+      will-change: transform;
+      cursor: pointer;
+      mix-blend-mode: multiply;
+     /* filter: sepia(1) hue-rotate(155deg); */
+    }
+
+    @media (max-width: 600px) {
+      .floating {
+        width: 45vw;
+        max-width: 90vw;
+        min-width: 120px;
+      }
+    }
+
+    /* styling for mobile view navigation menu */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .mobile-nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    .mobile-nav a {
+      margin: 20px 0;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      text-transform: uppercase;
     }
 
     /* styling for hamburger toggle icon */ 
@@ -55,12 +250,11 @@
       justify-content: center;
       gap: 4px;
       cursor: pointer;
-      margin-left: 260px;
     }
     .hamburger div {
       width: 25px;
       height: 3px;
-      background-color: white;
+      background-color: black;
       transition: all 0.3s ease;
     }
     .hamburger.active div:nth-child(1) {
@@ -73,180 +267,82 @@
       transform: rotate(-45deg) translate(5px, -5px);
     }
 
-    /* styling for mobile view navigation menu */
-    .mobile-nav {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: black;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .mobile-nav.show {
-      display: flex;
-      opacity: 1;
-      visibility: visible;
-    }
-    .mobile-nav a {
-      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
-      margin: 20px 0;
-      font-size: 20px;
-      color: white;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-    .mobile-nav a:hover {
-      text-decoration: underline;
+    /* Fade out animation */
+    .fade-out {
+      animation: fadeOut 1s forwards;
     }
 
-    /* styling for video landing */
-    .hero {
-      height: 100vh;
-      display: flex;
-      align-items: flex-end;
-      position: relative;
-      padding-left: 60px;
-      padding-bottom: 130px;
-    }
-    
-    .hero video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
+#flyby-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+.flyby {
+  animation: flyby-right 60s ease-out forwards;
+  mix-blend-mode: multiply;
+  pointer-events: auto;
+  cursor: pointer;
+  position: absolute;
+  height: auto;
+  width: 250px;
+  will-change: transform;
+}
+.flyby:hover {
+  animation-play-state: paused;
+}
+
+#floater-container,
+#flyby-container {
+  pointer-events: none;
+}
+
+.floating,
+.flyby {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.flyby-track-0 { top: 0%; }
+.flyby-track-1 { top: 15%; }
+.flyby-track-2 { top: 30%; }
+.flyby-track-3 { top: 45%; }
+.flyby-track-4 { top: 60%; }
+
+
+@keyframes flyby-with-wobble {
+  0% {
+    transform: translateX(-200px) translateY(0);
+  }
+  50% {
+    transform: translateX(calc(55vw)) translateY(-8px);
+  }
+  100% {
+    transform: translateX(120vw) translateY(0);
+  }
+}
+
+@keyframes flyby-right {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(120vw);
+  }
+}
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
 
-    /* styling for title and paragraph */
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      text-align: left;
-      max-width: 600px;
+     @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.ttf') format('truetype');
+      font-style: italic;
     }
-    .hero-content h1 {
-      font-size: 50px;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-    .hero-content p {
-      font-size: 50px;
-      line-height: 1.6;
-      font-weight: 400;
-    }
-
-    /* styling for divider line */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: white;
-      margin-top: 30px;
-      margin-bottom: 10px;
-    }
-    /* styling for email address */
-    .email-section {
-      padding-left: 0px;
-      padding-bottom: 30px;
-      font-size: 15px;
-    }
-    .email-section a {
-      color: white;
-      text-decoration: none;
-    }
-
-    /* title animation */
-    .hero-content h1 {
-      font-size: 50px;
-      margin-bottom: 20px;
-      font-weight: 700;
-      opacity: 0;  
-      animation: fadeSlideUp 1s ease forwards;
-      animation-delay: 0.3s;
-    }
-
-    /* paragraph animation */
-    .hero-content p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      font-weight: 400;
-      opacity: 0;
-      animation: fadeSlideUp 1s ease forwards;
-      animation-delay: 0.8s;
-    }
-
-    /* divider line animation*/
-    .divider {
-      width: 0;
-      height: 1px;
-      background: white;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      animation: growWidth 1s ease forwards;
-      animation-delay: 1.3s;
-    }
-
-    /* email address animation*/
-    .email-section a {
-      color: white;
-      text-decoration: none;
-      opacity: 0;
-      display: inline-block;
-      animation: fadeSlideUp 1s ease forwards;
-      animation-delay: 1.6s;
-    }
-    .pipe-separator {
-      display: inline-block;
-      margin: 0 10px;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeInPipe 0.6s ease forwards;
-      animation-delay: 1.7s;
-    }
-    .email-line {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* animation styling*/
-    @keyframes fadeSlideUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes growWidth {
-      0% {
-        width: 0;
-      }
-      100% {
-        width: 100%;
-      }
-    }
-    @keyframes fadeInPipe {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* font styling */ 
     @font-face {
       font-family: 'Akzidenz Grotesk Italic';
       src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
@@ -278,90 +374,435 @@
       font-weight: bold;
     }
 
-    /* media queries for device responsiveness */
+
     @media (max-width: 768px) {
       nav {
         display: none;
       }
       .hamburger {
         display: flex;
-        margin-left: 275px; 
-        margin-top: -30px; 
       }
-      .hero {
-        align-items: flex-end;
-        padding: 30px;
+      .mobile-nav.show {
+        display: flex;
       }
-      .hero-content h1 {
-        font-size: 2rem;
+      .container {
+        grid-template-columns: 1fr;
+        padding: 20px;
       }
-      .hero-content p {
-        font-size: 1rem;
+      .filter-bar {
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
       }
-      .email-section {
-        padding-left: 0px;
+      .filter-bar button {
+        margin: 8px 6px;
+        font-size: 14px;
       }
-      .pipe-separator {
-        display: none;
-      }
-      .email-line {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
+      .header-title {
+        font-size: 24px;
       }
     }
-  </style>
-</head>
 
+    
+
+  </style>
+
+</head>
 <body>
-  <header>
-    <div style="flex: 1;"></div>
-    <nav class="desktop-nav">
-      <a href="floating_proj.html">PROJECTS</a>
-      <a href="press.html">PRESS</a>
-      <a href="about.html">ABOUT</a>
-      <a href="contact.html">CONTACT</a>
-    </nav>
-    <div class="hamburger" id="hamburger">
+  <!-- <div id="footer-bar" data-link="projects.html">
+    <div class="bar-lines">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div> -->
+<div id="projects-overlay">
+  <!-- Optional: You can replicate the projects page content here -->
+</div>
+<div id="floater-container"></div>
+<div id="flyby-container"></div>
+
+<template id="image-template">
+  <img class="floating" src="" />
+</template>
+
+  <div id="vanta-bg"></div>
+<header>
+    <a href="index.html" style="text-decoration: none; color: black;">
+      <h1 class="header-title">Empathy in Point Clouds</h1>
+    </a>
+    <div class="hamburger" onclick="toggleMobileMenu()">
       <div></div>
       <div></div>
       <div></div>
     </div>
+    <nav>
+      <a href="projects.html" class="active">PROJECTS</a>
+      <a href="press.html">PRESS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
   </header>
 
-  <div class="mobile-nav" id="mobileNav">
-    <a href="projects.html">PROJECTS</a>
+  <div class="mobile-nav" id="mobileMenu">
+    <a href="projects.html" class="active">PROJECTS</a>
     <a href="press.html">PRESS</a>
     <a href="about.html">ABOUT</a>
     <a href="contact.html">CONTACT</a>
   </div>
 
-  <section class="hero">
-    <video src="eipclanding.mp4" autoplay muted loop playsinline></video>
-    <div class="hero-content">
-      <h1>Empathy in Point Clouds</h1>
-      <p>Empathy in Point-Clouds (EIPC) crafts immersive, data-driven design workflows that reframe architecture within Spatial Justice, creating counter-narratives and vivid urban imaginaries through digital worldbuilding.</p>
-      <div class="divider"></div>
-    <div class="email-section">
-      <div class="email-line">
-        <a href="mailto:eipc.scanlab@gmail.com">eipc.scanlab@gmail.com</a>
-        <span class="pipe-separator">|</span>
-        <a href="https://maps.app.goo.gl/H9mDWBUXWmm4iHbPA" target="_blank" style="color: white; text-decoration: none;">
-          42.2895754, -83.7170503
-        </a>
-      </div>
-    </div>
-    </div>
-  </section>
+  
 
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobileNav');
+<script>
+  const FLOAT_SPEED = 0.5;
+  const WOBBLE_FREQ = 0.002;
+  const WOBBLE_MAG = 20;
+  const MAX_INSTANCES_PER_IMAGE = 1;
+  const SPAWN_INTERVAL = 1000;
+const isMobile = window.innerWidth <= 600;
+const BOUNCE_MARGIN = isMobile ? 30 : 100;
 
-    hamburger.addEventListener('click', () => {
-      mobileNav.classList.toggle('show');
-      hamburger.classList.toggle('active');
+  const imageSources = [
+    "point_cloud_renders/AssembleSound_anchor_grey.gif",
+	"point_cloud_renders/AWT_anchor_grey.gif",
+	"point_cloud_renders/HillAuditorium_anchor_grey.gif",
+	"point_cloud_renders/MichiganStadium_anchor_grey.gif",
+	"point_cloud_renders/MIIBS_anchor_grey.gif",
+	"point_cloud_renders/OR_anchor_grey.gif",
+	"point_cloud_renders/Rackham_anchor_grey.gif"
+  ];
+
+  const imageLinks = [
+    "grace.html",
+    "windtunnel.html",
+    "hill.html",
+    "stadium.html",
+    "miibs.html",
+    "OR3.html",
+    "rackham.html",
+  ];
+
+  const imageCategories = [
+  ["Education"],             // AWT
+  ["Public"], // AssembleSound
+  ["Education"],   // OR
+  ["Public"],                // Stadium
+  ["Preservation"],          // Hill
+  ["Education"] // Hill alt
+  ["Preservation"],          // Hill
+];
+
+  const floaters = [];
+  const imageCounts = {};
+  imageSources.forEach(src => imageCounts[src] = 0);
+  const template = document.getElementById('image-template');
+  let time = 0;
+
+  const FILTERS = [
+  "sepia(1) hue-rotate(150deg)",
+  "sepia(1) hue-rotate(290deg)",
+  "sepia(1) hue-rotate(0deg)",
+  "sepia(0) hue-rotate(0deg)"
+];
+
+  function createFloater(src, x, y, dx, dy, index) {
+    if (imageCounts[src] >= MAX_INSTANCES_PER_IMAGE) return false;
+    
+    const imgEl = template.content.firstElementChild.cloneNode(true);
+    imgEl.src = src;
+
+    const randomFilter = FILTERS[Math.floor(Math.random() * FILTERS.length)];
+     imgEl.style.filter = randomFilter;
+
+     // Randomize height between 160px and 260px
+    const minHeight = 150;
+    const maxHeight = 230;
+    const randomHeight = minHeight + Math.random() * (maxHeight - minHeight);
+    imgEl.style.height = `${randomHeight}px`;
+    imgEl.style.width = 'auto'; // Maintain aspect ratio
+
+  document.getElementById('floater-container').appendChild(imgEl);
+
+  const allCategories = ["Preservation", "Education", "Public"];
+const currentCategories = imageCategories[index] || [];
+
+const captionEl = document.createElement('div');
+captionEl.className = 'caption';
+
+captionEl.innerHTML = `
+  <div class="caption-row">
+    ${allCategories.map(cat => {
+      const isActive = currentCategories.includes(cat);
+      return `<span class="caption-category ${isActive ? 'active' : ''}">${cat}</span>`;
+    }).join('')}
+  </div>
+`;
+
+document.getElementById('floater-container').appendChild(captionEl);
+
+    const phaseX = Math.random() * Math.PI * 2;
+    const phaseY = Math.random() * Math.PI * 2;
+
+    const floater = {
+      el: imgEl,
+      captionEl,
+      src,
+      x,
+      y,
+      dx,
+      dy,
+      phaseX,
+      phaseY,
+      paused: false
+    };
+    floaters.push(floater);
+    imageCounts[src]++;
+
+    requestAnimationFrame(() => { imgEl.style.opacity = 1; });
+
+    imgEl.style.pointerEvents = "auto";
+
+    imgEl.addEventListener('mouseenter', () => {
+      floater.paused = true;
+      captionEl.style.opacity = 1;
     });
-  </script>
+    imgEl.addEventListener('mouseleave', () => {
+      floater.paused = false;
+      captionEl.style.opacity = 0;
+    });
+
+    const url = (index !== -1) ? imageLinks[index] : 'default.html';
+   imgEl.addEventListener('click', () => {
+  document.body.classList.add('fade-out');
+  setTimeout(() => {
+    window.location.href = url;
+  }, 500); // Match your fade-out time
+});
+
+
+    return true;
+  }
+
+  function spawnFromEdge() {
+    const src = imageSources[Math.floor(Math.random() * imageSources.length)];
+    if (imageCounts[src] >= MAX_INSTANCES_PER_IMAGE) return;
+
+    const side = Math.floor(Math.random() * 4);
+    let x, y, dx, dy;
+    const buffer = 200;
+
+    switch (side) {
+      case 0:
+        x = Math.random() * window.innerWidth;
+        y = -buffer;
+        dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        dy = Math.random() * FLOAT_SPEED;
+        break;
+      case 1:
+        x = window.innerWidth + buffer;
+        y = Math.random() * window.innerHeight;
+        dx = -Math.random() * FLOAT_SPEED;
+        dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        break;
+      case 2:
+        x = Math.random() * window.innerWidth;
+        y = window.innerHeight + buffer;
+        dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        dy = -Math.random() * FLOAT_SPEED;
+        break;
+      case 3:
+        x = -buffer;
+        y = Math.random() * window.innerHeight;
+        dx = Math.random() * FLOAT_SPEED;
+        dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+        break;
+    }
+
+    const srcIndex = imageSources.indexOf(src);
+    createFloater(src, x, y, dx, dy, srcIndex);
+  }
+
+  function animate() {
+    time += 1;
+
+    floaters.forEach(f => {
+      if (!f.paused) {
+        f.dx += (Math.random() - 0.5) * 0.01;
+        f.dy += (Math.random() - 0.5) * 0.01;
+
+        f.x += f.dx;
+        f.y += f.dy;
+      }
+
+      const wobbleX = Math.sin(time * WOBBLE_FREQ + f.phaseX) * WOBBLE_MAG;
+      const wobbleY = Math.cos(time * WOBBLE_FREQ + f.phaseY) * WOBBLE_MAG;
+
+      const imgX = f.x + wobbleX;
+      const imgY = f.y + wobbleY;
+
+      f.el.style.transform = `translate(${imgX}px, ${imgY}px)`;
+
+      // Position caption below image with a small vertical gap
+      const rect = f.el.getBoundingClientRect();
+      const imgRect = f.el.getBoundingClientRect();
+      const captionRect = f.captionEl.getBoundingClientRect();
+
+      const captionMarginRight = 50; // adjust this value to control distance from right edge
+
+      const captionX = imgX + imgRect.width - captionRect.width - captionMarginRight;
+      const captionY = imgY + imgRect.height + 6;
+      f.captionEl.style.transform = `translate(${captionX}px, ${captionY}px)`;
+
+
+      // Bounce logic
+      if (rect.left < -BOUNCE_MARGIN && f.dx < 0) f.dx *= -1;
+      if (rect.right > window.innerWidth + BOUNCE_MARGIN && f.dx > 0) f.dx *= -1;
+      if (rect.top < -BOUNCE_MARGIN && f.dy < 0) f.dy *= -1;
+      if (rect.bottom > window.innerHeight + BOUNCE_MARGIN && f.dy > 0) f.dy *= -1;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  // Initial spawn of 4-6 images
+  const initialCount = 4 + Math.floor(Math.random() * 3);
+
+  for (let i = 0; i < initialCount; i++) {
+    const src = imageSources[i % imageSources.length];
+    const imgWidth = Math.min(window.innerWidth * 0.45, 250); // match CSS
+    const imgHeight = imgWidth * 0.75; // estimate aspect ratio
+
+    // Clamp spawn area so image is always fully visible
+    const x = Math.random() * (window.innerWidth - imgWidth);
+    const y = Math.random() * (window.innerHeight - imgHeight - 60 - 30);
+    const clampedX = Math.max(0, Math.min(x, window.innerWidth - imgWidth));
+    const clampedY = Math.max(0, Math.min(y, window.innerHeight - imgHeight - 60 - 30));
+
+    const dx = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+    const dy = (Math.random() - 0.5) * FLOAT_SPEED * 2;
+    createFloater(src, clampedX, clampedY, dx, dy, i);
+  }
+
+  // Continuous spawning from edges
+  setInterval(() => {
+    const spawnCount = 1 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < spawnCount; i++) {
+      spawnFromEdge();
+    }
+  }, SPAWN_INTERVAL);
+
+  animate();
+
+   function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+
+      mobileMenu.classList.toggle('show');
+      hamburger.classList.toggle('active');
+    }
+
+
+const footerBar = document.getElementById("footer-bar");
+const projectsOverlay = document.getElementById("projects-overlay");
+
+footerBar.addEventListener("click", () => {
+  footerBar.classList.add("rising");
+  projectsOverlay.classList.add("rising");
+
+  // Optional: fade out floaters/captions for cleaner look
+  document.querySelectorAll(".floating").forEach(el => el.style.opacity = 0);
+  document.querySelectorAll(".caption").forEach(el => el.style.opacity = 0);
+
+  // Navigate after animation completes (match with transition duration)
+  setTimeout(() => {
+    window.location.href = footerBar.dataset.link;
+  }, 350);
+});
+  // fly by logic
+  
+const flybyImages = {
+  0: [ 'images/flyby/djiAir2s.png' ],
+  1: [ 'images/flyby/djiAir2s.png' ],
+  2: [ 'images/flyby/djiAir2s.png'],
+  3: [ 'images/flyby/faroFocus.png'],
+  4: [ 'images/flyby/groundTargets.png' ],
+
+};
+
+function launchFlyby(trackIndex) {
+  const container = document.getElementById("flyby-container");
+  const imagePool = flybyImages[trackIndex];
+  const imageSrc = imagePool[Math.floor(Math.random() * imagePool.length)];
+
+  const img = document.createElement("img");
+  img.src = imageSrc;
+  img.className = `flyby flyby-track-${trackIndex}`;
+  img.style.left = "-200px";
+
+  img.addEventListener('click', () => {
+    window.location.href = "equipment.html";
+  });
+
+  container.appendChild(img);
+
+  // Remove after animation ends
+  img.addEventListener('animationend', () => {
+    img.remove();
+  });
+}
+
+let flybyInterval = null;
+
+// Function to start spawning flybys
+// Function to start spawning flybys
+let flybyTimeout = null;
+
+function startFlybySpawning() {
+  if (flybyInterval || flybyTimeout) return; // Already scheduled
+
+  // First spawn after 10 seconds
+  flybyTimeout = setTimeout(() => {
+    if (document.visibilityState === 'visible') {
+      const track = Math.floor(Math.random() * 5 );
+      launchFlyby(track);
+    }
+
+    // Start recurring spawns every 65 seconds
+    flybyInterval = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        const track = Math.floor(Math.random() * 5 );
+        launchFlyby(track);
+      }
+    }, 40000);
+
+    flybyTimeout = null; // Clear timeout tracker
+
+  }, 1000);
+}
+
+// Function to stop spawning flybys
+function stopFlybySpawning() {
+  clearInterval(flybyInterval);
+  flybyInterval = null;
+}
+
+// Watch for tab visibility changes
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    startFlybySpawning();
+  } else {
+    stopFlybySpawning();
+  }
+});
+
+// Start spawning initially if page is visible
+if (document.visibilityState === 'visible') {
+  startFlybySpawning();
+}
+
+
+</script>
+
+
 </body>
 </html>

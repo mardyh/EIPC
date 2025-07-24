@@ -120,7 +120,7 @@
 
     /* styling for filter menu*/
     .filter-bar {
-      margin-top: 120px;
+      margin-top: 90px;
       margin-bottom: 20px;
     }
 
@@ -319,15 +319,15 @@
     </nav>
   </header>
 
-   <div id="black-bar" data-link="projects.html" style="cursor:pointer;">
+   <!-- <div id="black-bar" data-link="projects.html" style="cursor:pointer;">
     <div class="bar-lines">
       <div></div>
       <div></div>
       <div></div>
     </div>
-  </div>
+  </div> -->
 
-    <div id="page-wrapper">
+    <!-- <div id="page-wrapper"> -->
 
   <div class="mobile-nav" id="mobileMenu">
     <a href="projects.html" class="active">PROJECTS</a>
@@ -523,17 +523,17 @@
       hamburger.classList.toggle('active');
     }
 
-    const blackBar = document.getElementById("black-bar");
+    // const blackBar = document.getElementById("black-bar");
     const pageWrapper = document.getElementById("page-wrapper");
 
-blackBar.addEventListener("click", () => {
-  blackBar.classList.add("lowering");
-  pageWrapper.classList.add("lowering-page");
+// blackBar.addEventListener("click", () => {
+//   blackBar.classList.add("lowering");
+//   pageWrapper.classList.add("lowering-page");
 
-  setTimeout(() => {
-    window.location.href = "floating_proj.html";
-  }, 700); // delayed to allow fade in to finish before navigation
-});
+//   setTimeout(() => {
+//     window.location.href = "floating_proj.html";
+//   }, 700); // delayed to allow fade in to finish before navigation
+// });
 
     window.addEventListener("load", () => {
       const projectItems = document.querySelectorAll(".project-item");

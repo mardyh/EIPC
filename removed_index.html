@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Empathy in Point Clouds</title>
+  <link rel="icon" href="images/icon.png" type="image/png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+      background: white;
+      color: white;
+      overflow-x: hidden;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      padding: 50px 70px;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    /* styling for menu options on the right */
+    nav {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: border 0.3s;
+      font-size: 18px;
+    }
+    nav a:hover {
+      border-bottom: 2px solid white;
+    }
+
+    /* styling for hamburger toggle icon */ 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      margin-left: 260px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* styling for mobile view navigation menu */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: black;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .mobile-nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    .mobile-nav a {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      margin: 20px 0;
+      font-size: 20px;
+      color: white;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .mobile-nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* styling for video landing */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+      padding-left: 60px;
+      padding-bottom: 130px;
+    }
+    
+    .hero video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    /* styling for title and paragraph */
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: left;
+      max-width: 600px;
+    }
+    .hero-content h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .hero-content p {
+      font-size: 50px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    /* styling for divider line */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: white;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+    /* styling for email address */
+    .email-section {
+      padding-left: 0px;
+      padding-bottom: 30px;
+      font-size: 15px;
+    }
+    .email-section a {
+      color: white;
+      text-decoration: none;
+    }
+
+    /* title animation */
+    .hero-content h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      opacity: 0;  
+      animation: fadeSlideUp 1s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    /* paragraph animation */
+    .hero-content p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeSlideUp 1s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    /* divider line animation*/
+    .divider {
+      width: 0;
+      height: 1px;
+      background: white;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      animation: growWidth 1s ease forwards;
+      animation-delay: 1.3s;
+    }
+
+    /* email address animation*/
+    .email-section a {
+      color: white;
+      text-decoration: none;
+      opacity: 0;
+      display: inline-block;
+      animation: fadeSlideUp 1s ease forwards;
+      animation-delay: 1.6s;
+    }
+    .pipe-separator {
+      display: inline-block;
+      margin: 0 10px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInPipe 0.6s ease forwards;
+      animation-delay: 1.7s;
+    }
+    .email-line {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* animation styling*/
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes growWidth {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+    @keyframes fadeInPipe {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
+      font-weight: bold;
+    }
+
+    /* media queries for device responsiveness */
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+        margin-left: 275px; 
+        margin-top: -30px; 
+      }
+      .hero {
+        align-items: flex-end;
+        padding: 30px;
+      }
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      .email-section {
+        padding-left: 0px;
+      }
+      .pipe-separator {
+        display: none;
+      }
+      .email-line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div style="flex: 1;"></div>
+    <nav class="desktop-nav">
+      <a href="projects.html">PROJECTS</a>
+      <a href="press.html">PRESS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="projects.html">PROJECTS</a>
+    <a href="press.html">PRESS</a>
+    <a href="about.html">ABOUT</a>
+    <a href="contact.html">CONTACT</a>
+  </div>
+
+  <section class="hero">
+    <video src="eipclanding.mp4" autoplay muted loop playsinline></video>
+    <div class="hero-content">
+      <h1>Empathy in Point Clouds</h1>
+      <p>Empathy in Point-Clouds (EIPC) crafts immersive, data-driven design workflows that reframe architecture within Spatial Justice, creating counter-narratives and vivid urban imaginaries through digital worldbuilding.</p>
+      <div class="divider"></div>
+    <div class="email-section">
+      <div class="email-line">
+        <a href="mailto:eipc.scanlab@gmail.com">eipc.scanlab@gmail.com</a>
+        <span class="pipe-separator">|</span>
+        <a href="https://maps.app.goo.gl/H9mDWBUXWmm4iHbPA" target="_blank" style="color: white; text-decoration: none;">
+          42.2895754, -83.7170503
+        </a>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      mobileNav.classList.toggle('show');
+      hamburger.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
