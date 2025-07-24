@@ -9,10 +9,12 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow-y: auto; 
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: auto;
       font-family: 'Akzidenz Grotesk Light', sans-serif;
       background: white;
+      scroll-behavior: smooth;
     }
     /* styling for the header title */
     header {
@@ -108,7 +110,7 @@
 
     /* styling for text sections */
     section {
-      min-height: 100vh;
+      min-height: 70vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -121,6 +123,7 @@
       box-sizing: border-box;
     }
     section.in-view {
+      visibility: visible;
       opacity: 1;
       transform: translateY(0);
     }
@@ -129,6 +132,10 @@
       text-align: left;
       font-size: 18px;
       line-height: 1.5;
+    }
+    #about {
+      padding-top: 200px;
+      padding-bottom: 40px; 
     }
 
     /* styling for team images section*/
@@ -161,13 +168,14 @@
     /* styling for previous members sections */
     .timeline-wrapper {
       overflow-x: auto;
+      overflow-y: visible; /* or overflow-y: unset; */
       white-space: nowrap;
-      padding-bottom: 40px;
+      padding-bottom: 90px;
+      -webkit-overflow-scrolling: touch;
     }
     .timeline-horizontal {
       display: flex;
       gap: 30px;
-      padding: 10px;
       min-width: 400px;
     }
     .timeline-item {
@@ -192,6 +200,9 @@
     }
     .timeline-item ul li {
       margin-bottom: 4px;
+    }
+    #timeline {
+      padding-top: 90px;
     }
 
     /* styling for bio pop up */
@@ -235,26 +246,6 @@
       color: black;
       text-decoration: underline;
     }
-
-    /* styling for tic marks */
-    .tick-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1; /* Sends it behind all other content */
-      pointer-events: none; /* Prevents any interaction */
-    }
-    .tic {
-      position: absolute;
-      background: rgb(0, 0, 0);
-      opacity: 1; /* Fully visible */
-    }
-    .tic.top-center    { top: 60px; left: 50%; width: 2px; height: 20px; transform: translateX(-50%); }
-    .tic.bottom-center { bottom: 0; left: 50%; width: 2px; height: 20px; transform: translateX(-50%); }
-    .tic.left-center   { left: 0; top: 50%; width: 20px; height: 2px; transform: translateY(-50%); }
-    .tic.right-center  { right: 0; top: 50%; width: 20px; height: 2px; transform: translateY(-50%); }
 
     /* animations styling */ 
     @keyframes fadeInUp {

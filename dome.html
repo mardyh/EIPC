@@ -6,9 +6,12 @@
   <title>Dome House</title>
     <link rel="stylesheet" href="css/fade.css" />
   <link rel="icon" href="images/icon.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Work+Sans:700" rel="stylesheet" />
   <style>
+    * {
+      font-variant-ligatures: none;
+      -webkit-font-variant-ligatures: none;
+      font-feature-settings: "liga" 0, "clig" 0;
+    }
     * {
       margin: 0;
       padding: 0;
@@ -120,7 +123,7 @@
     }
 
     .info-grid dt {
-      font-weight: bold;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       font-size: 18px;
     }
 
@@ -145,6 +148,38 @@
       max-width: 90%;
       max-height: 80%;
       border-radius: 10px;
+    }
+    
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
+      font-weight: bold;
     }
 
     /* Responsive styles */
@@ -211,15 +246,15 @@
       </div>
       <div>
         <dt>Site Address</dt>
-        <dd>6433 E Doubletree Ranch Rd, Paradise Valley, AZ 85253</dd>
+        <dd>7199 E Grapevine Rd, Carefree, AZ 85377</dd>
       </div>
       <div>
         <dt>Data Type</dt>
-        <dd>Unknown</dd>
+        <dd>LiDAR</dd>
       </div>
       <div>
         <dt>Scan Type</dt>
-        <dd>LiDAR</dd>
+        <dd>Interior, Exterior</dd>
       </div>
     </dl>
   </div>

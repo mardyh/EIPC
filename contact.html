@@ -100,180 +100,208 @@
       text-transform: uppercase;
     }
 
-     /* styling for image loop and main title */
-    .hero {
-      position: relative;
-      height: 110vh;
-      width: 100%;
-      overflow: hidden;
-    }
-    .image-frame {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 500px;
-      animation: moveHeroUp 2s ease forwards;
-      animation-delay: 2s;
-      z-index: 5;
-    }
-    .image-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity 1s ease;
-    }
-    .hero-contact-title {
-      position: absolute;
-      bottom: 10%; 
-      left: 0;
-      right: 0;
-      text-align: center;
-      transform: translateY(100%);
-      color: black;
-      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
-      opacity: 0;
-      font-size: 120px;
-      z-index: 10;
-      animation: slideTitleUp 2s ease forwards;
-      animation-delay: 2s;
-      transform-origin: center bottom;
-    }
-
-    /* styling for contact section */
-    main {
-      padding: 120px 20px 50px;
-      text-align: center;
-    }
-    main p {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 1s;
-    }
-    .contact-social {
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 0.5s;
-    }
-    .contact-social a {
-      margin: 0 15px;
-      font-size: 24px;
-      color: black;
-      transition: color 0.3s;
-    }
-    .contact-social a:hover { color: grey; }
-    .final-contact {
-      background: #e0e0e0;
-      padding: 60px 20px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 2s;
-    }
-    .final-contact h3 {
-      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-    .final-contact p {
-      font-size: 18px;
-      margin: 5px 0;
-    }
-
-    /* styling for side by side map and email form*/
-    .contact-container {
+    /* contact columns */
+    .contact-grid {
       display: flex;
+      gap: 60px;
       justify-content: center;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0 auto 20px;
-      padding: 0 20px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards;
-      animation-delay: 1s;
+      padding: 160px 40px 60px;
+      max-width: 1300px;
+      margin: 0 auto;
+      background: #f4f4f4;
     }
-    .contact-form {
-      flex: 1 1 50%;
-      max-width: 480px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    .column {
+      flex: 1;
+      font-size: 16px;
+      color: black;
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    .contact-info h2, .studio-info h2, .follow-info h2 {
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
+      font-size: 18px;
+      margin-bottom: 20px;
+      align-self: flex-start;
+    }
+    a {
+      color: black;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+
+    /* Uniform container for the content below original columns */
+    .content-box {
+      width: 100%;
+      height: 320px; /* uniform height */
+      border-radius: 8px;
+      padding: 15px;
+      box-sizing: border-box;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
-    .map-container {
-      flex: 1 1 50%;
-      max-width: 500px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-    }
-    .contact-form {
-      padding: 30px;
-      text-align: left;
+
+    /* Email form styling */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+      border-radius: 8px;
+      background-color: #f4f4f4;
     }
     form label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 16px;
+      font-weight: 600;
     }
     form input, form textarea {
-      width: 100%;
-      padding: 20px 12px; 
-      margin-bottom: 20px;
       font-family: 'Akzidenz Grotesk Light', sans-serif;
+      font-size: 14px;
+      padding: 8px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
+      border-radius: 4px;
+      resize: vertical;
+      width: 300px;
     }
     form button {
-      width: 100%;
-      background: black;
-      color: white;
-      border: none;
+      font-family: 'Akzidenz Grotesk Light', sans-serif;
+      font-size: 14px;
       padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+      width: 318px;
       cursor: pointer;
-      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
-      transition: background-color 0.3s;
     }
-    form button:hover { background: grey; }
-    .map-container {
-      height: 500px;
+    form button:hover {
+      text-decoration: underline;
+    }
+
+    /* Google Map iframe styling */
+    iframe {
+      border: none;
+      border-radius: 8px;
+      width: 300px;
+      height: 700px;
+    }
+    .map-box {
+      margin-top: 45px; /* or adjust the value to your liking */
+    }
+
+    /* image loop container */
+    .image-loop {
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      position: relative;
+      border-radius: 8px;
+    }
+    .loop-images {
+      display: flex;
+      flex-direction: column;
+      animation: scrollLoop 6s linear infinite;
+      height: 100%;
+    }
+    .loop-images img {
+      flex-shrink: 0;
+      height: 200px;
+      margin-bottom: 20px;
+      object-fit: cover;
+      width: 300px;
+      border-radius: 8px;
     }
 
     /* animation styling */
-    @keyframes moveHeroUp {
-      to {
-        transform: translate(-50%, calc(-50% - 120px)) scale(0.9);
-      }
+    @keyframes scrollLoop {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-220px); }
     }
-    @keyframes slideTitleUp {
-      from {
-        opacity: 0;
-        transform: translateY(100%);
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      .hamburger {
+        display: flex;
       }
-    }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      .mobile-nav.show {
+        display: flex;
       }
-    }
-    @keyframes slideTitleUpMobile {
-      from {
-        opacity: 0;
-        transform: translate(-50%, 100%); 
+      .header-title {
+        font-size: 24px;
       }
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%); 
+      .mobile-menu a {
+        font-size: 18px;
+        margin: 15px 0;
+      }
+      .contact-grid {
+        flex-direction: column;
+        gap: 60px;
+        padding: 140px 20px 40px;
+        align-items: center;
+      }
+      .column {
+        width: 100%;
+        max-width: 90%;
+        align-items: center;
+        text-align: center;
+      }
+      .column h2 {
+        align-self: center;
+        text-align: center;
+      }
+      .content-box {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        padding: 15px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      form {
+        align-items: center;
+        width: 300px;
+      }
+      form input,
+      form textarea{
+        width: 100%;
+        max-width: 300px;
+      }
+      .mobile-hidden {
+        display: none;
+      }
+      iframe {
+        width: 100%;
+        max-width: 320px;
+        height: 400px;
+      }
+      .image-loop {
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-width: 320px;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+      .loop-images {
+        display: flex;
+        flex-direction: row;
+        animation: none;
+        gap: 10px;
+        width: max-content;
+      }
+      .loop-images img {
+        width: 160px;
+        height: auto;
+        flex-shrink: 0;
+        object-fit: cover;
+        border-radius: 8px;
       }
     }
 
@@ -309,35 +337,10 @@
       font-weight: bold;
     }
 
-    /* media queries for device responsiveness */
-    @media (max-width: 768px) {
-      .hero-contact-title {
-        font-size: 40px;
-        top: 55%;
-        left: 47%;
-        bottom: auto;
-        transform: translate(-50%, 100%); 
-        animation: slideTitleUpMobile 2s ease forwards;
-        animation-delay: 2s;
-        text-align: center;
-        white-space: nowrap;
-      }
-      .image-frame {
-        width: 350px; 
-      }
-      nav { display: none; }
-      .hamburger { display: block; }
-      .contact-container {
-        flex-direction: column;
-      }
-      .contact-form, .map-container {
-        max-width: 100%;
-      }
-      .map-container {
-        height: 300px;
-      }
-      .final-contact h3 { font-size: 20px; }
-      .contact-social a { font-size: 20px; }
+    .column .content-box {
+      padding-left: 0;
+      margin-left: 2px; /* or adjust this value to your liking */
+      width: calc(100% + 15px); /* optional: to visually compensate for removed padding */
     }
   </style>
 </head>
@@ -363,47 +366,75 @@
     <a href="contact.html" class="active">CONTACT</a>
   </div>
 
-  <section class="hero">
-    <div class="image-frame">
-      <img id="heroImage" src="images/contact-scanning.jpg" alt="hero">
-    </div>
-    <h1 class="hero-contact-title">Get In Touch</h1>
-  </section>
-
   <main>
-    <h3>If you have any questions or would like to stop by, please don't hesitate to contact us.</h3>
-    <p>Hours: Open Monday to Friday from 10:00 a.m. to 6:00 p.m.</p>
-    <div class="contact-social">
-      <a href="mailto:eipc.scanlab@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-      <a href="https://www.instagram.com/umich.taubmancollege/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.linkedin.com/school/taubman-college-of-architecture-and-urban-planning/posts/?feedView=all" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-      <a href="https://maps.app.goo.gl/93yAGNyPrFcCisp89" target="_blank"><i class="fa-solid fa-map"></i></a>
-    </div>
-    <div class="contact-container">
-      <div class="contact-form">
-        <form action="mailto:eipc.scanlab@gmail.com" method="POST" enctype="text/plain">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="6" required></textarea>
-          <button type="submit">Send</button>
-        </form>
+    <div class="contact-grid">
+      <div class="column contact-info">
+        <h2>Contact</h2>
+        <!-- Original contact info -->
+        <p>Email the Team<br><a href="mailto:eipc.scanlab@gmail.com">eipc.scanlab@gmail.com</a></p>
+        <p>Open Monday to Friday<br>10:00 a.m. – 6:00 p.m.</p>
+
+        <!-- Email form below original content -->
+        <div class="content-box">
+          <form action="mailto:eipc.scanlab@gmail.com" method="post" enctype="text/plain" onsubmit="alert('Thank you for your message!');">
+            <label for="name" class="mobile-hidden">Name</label>
+            <input type="text" id="name" name="Name" placeholder="Name" required />
+            <label for="name" class="mobile-hidden">Email</label>
+            <input type="text" id="name" name="Email" placeholder="Email" required />
+            <label for="name" class="mobile-hidden">Message</label>
+            <input type="text" id="name" name="Message" placeholder="Message" required />
+            <button type="submit">Send</button>
+          </form>
+        </div>
       </div>
-      <div class="map-container">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2922.367531379278!2d-83.73749932367494!3d42.29076134306183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883cadb1de7995db%3A0xb5428ac4ef418fa6!2s2000%20Bonisteel%20Blvd%2C%20Ann%20Arbor%2C%20MI%2048109!5e0!3m2!1sen!2sus!4v1719332809276!5m2!1sen!2sus"
-          width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy">
-        </iframe>
+
+      <div class="column studio-info">
+        <h2>Studio</h2>
+        <!-- Original studio info -->
+        <p>Taubman College of Architecture and Urban Planning<br>2000 Bonisteel Blvd<br>Ann Arbor, MI 48109<br>Room 3148</p>
+
+        <!-- Google Map below original content -->
+        <div class="content-box map-box">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3120.592186015584!2d-83.7199244237097!3d42.289277771199586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x883cae88f600ffd3%3A0x66530bd832ff504c!2sTaubman%20College%20of%20Architecture%20and%20Urban%20Planning!5e1!3m2!1sen!2sus!4v1753289265104!5m2!1sen!2sus" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Taubman College Location"
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="column follow-info">
+        <h2>Follow Us</h2>
+        <!-- Original social links -->
+        <div class="contact-social">
+          <div class="social-link">
+            <a href="https://www.instagram.com/umich.taubmancollege/" target="_blank">Instagram ↗</a>
+            <p>@umich.taubmancollege</p>
+          </div>
+          <div class="social-link">
+            <a href="https://www.linkedin.com/school/taubman-college-of-architecture-and-urban-planning/posts/?feedView=all" target="_blank">LinkedIn ↗</a>
+            <p>Taubman College</p>
+          </div>
+        </div>
+
+        <!-- Image loop below original content -->
+        <div class="content-box">
+          <div class="image-loop">
+            <div class="loop-images">
+              <img src="images/contact-scanning.jpg" alt="Loop 1" />
+              <img src="images/contact-scanlab.jpg" alt="Loop 2" />
+              <img src="images/contact-visstudio.png" alt="Loop 3" />
+              <img src="images/contact-scanning.jpg" alt="Loop 1" />
+              <img src="images/contact-scanlab.jpg" alt="Loop 2" />
+              <img src="images/contact-visstudio.png" alt="Loop 3" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
-
-  <div class="tic top-center"></div>
-  <div class="tic bottom-center"></div>
-  <div class="tic left-center"></div>
-  <div class="tic right-center"></div>
 
   <script>
     function toggleMobileMenu(button) {
@@ -411,25 +442,6 @@
       menu.classList.toggle('show');
       button.classList.toggle('open');
     }
-    const images = [
-      "images/contact-scanning.jpg",
-      "images/contact-scanlab.jpg",
-      "images/contact-visstudio.png"
-    ];
-    let current = 0;
-    const heroImage = document.getElementById("heroImage");
-    setInterval(() => {
-      current = (current + 1) % images.length;
-      const nextImage = new Image();
-      nextImage.src = images[current];
-      nextImage.onload = () => {
-        heroImage.style.opacity = 0;
-        setTimeout(() => {
-          heroImage.src = images[current];
-          heroImage.style.opacity = 1;
-        }, 200);
-      };
-    }, 900);
   </script>
 </body>
 </html>

@@ -6,9 +6,12 @@
   <title>University of Michigan Frankel Cardiovascular Care Center</title>
   <link rel="icon" href="images/icon.png" type="image/png">
     <link rel="stylesheet" href="css/fade.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Work+Sans:700" rel="stylesheet" />
   <style>
+    * {
+      font-variant-ligatures: none;
+      -webkit-font-variant-ligatures: none;
+      font-feature-settings: "liga" 0, "clig" 0;
+    }
     * {
       margin: 0;
       padding: 0;
@@ -128,7 +131,7 @@
     }
 
     .info-grid dt {
-      font-weight: bold;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       font-size: 18px;
     }
 
@@ -153,6 +156,38 @@
       max-width: 90%;
       max-height: 80%;
       border-radius: 10px;
+    }
+
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
+      font-weight: bold;
     }
 
     /* Responsive styles */
@@ -215,7 +250,7 @@
     <dl>
       <div>
         <dt>Completion Date</dt>
-        <dd>Summer 2022</dd>
+        <dd>Fall 2022</dd>
       </div>
       <div>
         <dt>Site Address</dt>
@@ -245,11 +280,17 @@
   </div>
 
   <div class="image-row">
-    <a href="images/or1.png" class="gallery-link" target="_blank">
-      <img src="images/or1.png" alt="Image 1" />
+    <a href="images/OR_perspective_1.png" class="gallery-link" target="_blank">
+      <img src="images/OR_perspective_1.png" alt="Image 1" />
     </a>
-    <a href="images/or2.png" class="gallery-link" target="_blank">
-      <img src="images/or2.png" alt="Image 2" />
+    <a href="images/OR_sideSection_1.png" class="gallery-link" target="_blank">
+      <img src="images/OR_sideSection_1.png" alt="Image 2" />
+    </a>
+	<a href="images/OR_sideSection_1_clear.png" class="gallery-link" target="_blank">
+      <img src="images/OR_sideSection_1_clear.png" alt="Image 2" />
+    </a>
+	<a href="images/OR_top_clear.png" class="gallery-link" target="_blank">
+      <img src="images/OR_top_clear.png" alt="Image 2" />
     </a>
   </div>
 

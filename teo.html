@@ -6,9 +6,12 @@
   <title>Teotihuacan</title>
   <link rel="icon" href="images/icon.png" type="image/png">
     <link rel="stylesheet" href="css/fade.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Work+Sans:700" rel="stylesheet" />
   <style>
+    * {
+      font-variant-ligatures: none;
+      -webkit-font-variant-ligatures: none;
+      font-feature-settings: "liga" 0, "clig" 0;
+    }
     * {
       margin: 0;
       padding: 0;
@@ -128,7 +131,7 @@
     }
 
     .info-grid dt {
-      font-weight: bold;
+      font-family: 'Akzidenz Grotesk Light Bold', sans-serif;
       font-size: 18px;
     }
 
@@ -155,6 +158,38 @@
       border-radius: 10px;
     }
 
+    /* font styling */ 
+    @font-face {
+      font-family: 'Akzidenz Grotesk Italic';
+      src: url('fonts/Akzidenz Grotesk Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold Italic';
+      src: url('fonts/Akzidenz Grotesk Light Bold Italic.woff2') format('woff2');
+      font-style: italic;
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Bold';
+      src: url('fonts/Akzidenz Grotesk Light Bold.woff2') format('woff2');
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light Italic';
+      src: url('fonts/Akzidenz Grotesk Light Italic.woff2') format('woff2');
+      font-style: italic;
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Light';
+      src: url('fonts/Akzidenz Grotesk Light.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Akzidenz Grotesk Roman';
+      src: url('fonts/Akzidenz Grotesk Roman.woff2') format('woff2');
+      font-weight: bold;
+    }
+    
     /* Responsive styles */
     @media (max-width: 768px) {
       .title {
@@ -215,11 +250,11 @@
     <dl>
       <div>
         <dt>Completion Date</dt>
-        <dd>Summer 2022</dd>
+        <dd>Summer 2024</dd>
       </div>
       <div>
         <dt>Site Address</dt>
-        <dd>915 E Washington St, Ann Arbor, MI 48109</dd>
+        <dd>Acceso al Templo de Quetzalcoatl por Puerta 1, 55800 Teotihuacán de Arista, Méx., Mexico</dd>
       </div>
       <div>
         <dt>Data Type</dt>
@@ -227,7 +262,7 @@
       </div>
       <div>
         <dt>Scan Type</dt>
-        <dd>Interior</dd>
+        <dd>Interior, Exterior</dd>
       </div>
     </dl>
   </div>
