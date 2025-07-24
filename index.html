@@ -702,22 +702,22 @@ document.getElementById('floater-container').appendChild(captionEl);
     }
 
 
-const footerBar = document.getElementById("footer-bar");
-const projectsOverlay = document.getElementById("projects-overlay");
+// const footerBar = document.getElementById("footer-bar");
+// const projectsOverlay = document.getElementById("projects-overlay");
 
-footerBar.addEventListener("click", () => {
-  footerBar.classList.add("rising");
-  projectsOverlay.classList.add("rising");
+// footerBar.addEventListener("click", () => {
+//   footerBar.classList.add("rising");
+//   projectsOverlay.classList.add("rising");
 
-  // Optional: fade out floaters/captions for cleaner look
-  document.querySelectorAll(".floating").forEach(el => el.style.opacity = 0);
-  document.querySelectorAll(".caption").forEach(el => el.style.opacity = 0);
+//   // Optional: fade out floaters/captions for cleaner look
+//   document.querySelectorAll(".floating").forEach(el => el.style.opacity = 0);
+//   document.querySelectorAll(".caption").forEach(el => el.style.opacity = 0);
 
-  // Navigate after animation completes (match with transition duration)
-  setTimeout(() => {
-    window.location.href = footerBar.dataset.link;
-  }, 350);
-});
+//   // Navigate after animation completes (match with transition duration)
+//   setTimeout(() => {
+//     window.location.href = footerBar.dataset.link;
+//   }, 350);
+// });
   // fly by logic
   
 const flybyImages = {
