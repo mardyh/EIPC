@@ -46,7 +46,7 @@
     .caption-row {
       display: grid;
       /* grid-template-columns: repeat(3, 2fr); */
-      width: 250px; /* match image width */
+     /* width: 250px;  match image width */
       margin: 0 auto;
       text-align: center;
     }
@@ -193,14 +193,15 @@
 
     .floating {
       position: absolute;
-      width: 250px;
-      height: auto;
+      width: auto;
+      height: 230px;
       pointer-events: none;
       opacity: 0;
       transition: opacity 2s ease-in;
       will-change: transform;
       cursor: pointer;
       mix-blend-mode: multiply;
+     /* filter: sepia(1) hue-rotate(155deg); */
     }
 
     @media (max-width: 600px) {
@@ -310,6 +311,7 @@
 .flyby-track-2 { top: 30%; }
 .flyby-track-3 { top: 45%; }
 .flyby-track-4 { top: 60%; }
+
 
 @keyframes flyby-with-wobble {
   0% {
@@ -461,13 +463,13 @@ const isMobile = window.innerWidth <= 600;
 const BOUNCE_MARGIN = isMobile ? 30 : 100;
 
   const imageSources = [
-    "point_cloud_renders/AssembleSound_anchor_red.gif",
-	"point_cloud_renders/AWT_anchor_navy.gif",
-	"point_cloud_renders/HillAuditorium_anchor_red.gif",
-	"point_cloud_renders/MichiganStadium_anchor_yellow.gif",
-	"point_cloud_renders/MIIBS_anchor_brown.gif",
+    "point_cloud_renders/AssembleSound_anchor_grey.gif",
+	"point_cloud_renders/AWT_anchor_grey.gif",
+	"point_cloud_renders/HillAuditorium_anchor_grey.gif",
+	"point_cloud_renders/MichiganStadium_anchor_grey.gif",
+	"point_cloud_renders/MIIBS_anchor_grey.gif",
 	"point_cloud_renders/OR_anchor_grey.gif",
-	"point_cloud_renders/Rackham_anchor_teal.gif"
+	"point_cloud_renders/Rackham_anchor_grey.gif"
   ];
 
   const imageLinks = [
@@ -479,15 +481,6 @@ const BOUNCE_MARGIN = isMobile ? 30 : 100;
     "OR3.html",
     "rackham.html",
   ];
-
-  // const imageCaptions = [
-  //   "Aerospace Wind Tunnel Dome",
-  //   "Hill Auditorium",
-  //   "UofM Frankel Cardiovascular Care Center ",
-  //   "Michigan Stadium",
-  //   "Hill Auditorium",
-  //   "Hill Auditorium"
-  // ];
 
   const imageCategories = [
   ["Education"],             // AWT
@@ -505,12 +498,30 @@ const BOUNCE_MARGIN = isMobile ? 30 : 100;
   const template = document.getElementById('image-template');
   let time = 0;
 
+  const FILTERS = [
+  "sepia(1) hue-rotate(150deg)",
+  "sepia(1) hue-rotate(290deg)",
+  "sepia(1) hue-rotate(0deg)",
+  "sepia(0) hue-rotate(0deg)"
+];
+
   function createFloater(src, x, y, dx, dy, index) {
     if (imageCounts[src] >= MAX_INSTANCES_PER_IMAGE) return false;
-
+    
     const imgEl = template.content.firstElementChild.cloneNode(true);
     imgEl.src = src;
-document.getElementById('floater-container').appendChild(imgEl);
+
+    const randomFilter = FILTERS[Math.floor(Math.random() * FILTERS.length)];
+     imgEl.style.filter = randomFilter;
+
+     // Randomize height between 160px and 260px
+    const minHeight = 190;
+    const maxHeight = 230;
+    const randomHeight = minHeight + Math.random() * (maxHeight - minHeight);
+    imgEl.style.height = `${randomHeight}px`;
+    imgEl.style.width = 'auto'; // Maintain aspect ratio
+
+  document.getElementById('floater-container').appendChild(imgEl);
 
   const allCategories = ["Preservation", "Education", "Public"];
 const currentCategories = imageCategories[index] || [];
@@ -633,9 +644,15 @@ document.getElementById('floater-container').appendChild(captionEl);
 
       // Position caption below image with a small vertical gap
       const rect = f.el.getBoundingClientRect();
-      const captionX = imgX; // Because caption is same width as image (250px)
-      const captionY = imgY + rect.height + 6;
+      const imgRect = f.el.getBoundingClientRect();
+      const captionRect = f.captionEl.getBoundingClientRect();
+
+      const captionMarginRight = 50; // adjust this value to control distance from right edge
+
+      const captionX = imgX + imgRect.width - captionRect.width - captionMarginRight;
+      const captionY = imgY + imgRect.height + 6;
       f.captionEl.style.transform = `translate(${captionX}px, ${captionY}px)`;
+
 
       // Bounce logic
       if (rect.left < -BOUNCE_MARGIN && f.dx < 0) f.dx *= -1;
