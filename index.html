@@ -424,9 +424,11 @@
 <div id="floater-container"></div>
 <div id="flyby-container"></div>
 
+<!--
 <template id="image-template">
   <img class="floating" src="" />
 </template>
+-->
 
   <div id="vanta-bg"></div>
 <header>
@@ -465,10 +467,10 @@ const isMobile = window.innerWidth <= 600;
 const BOUNCE_MARGIN = isMobile ? 30 : 100;
 
   const imageSources = [
-    "point_cloud_renders/AssembleSound_anchor_grey.gif",
-	"point_cloud_renders/AWT_anchor_grey.gif",
-	"point_cloud_renders/HillAuditorium_anchor_grey.gif",
-	"point_cloud_renders/MichiganStadium_anchor_grey.gif",
+    "point_cloud_renders/AssembleSound_anchor_grey.webm",
+	"point_cloud_renders/AWT_anchor_grey.webm",
+	"point_cloud_renders/HillAuditorium_anchor_grey.webm",
+	"point_cloud_renders/MichiganStadium_anchor_grey60.webm",
 	"point_cloud_renders/MIIBS_anchor_grey.gif",
 	"point_cloud_renders/OR_anchor_grey.gif",
 	"point_cloud_renders/Rackham_anchor_grey.gif"
@@ -507,83 +509,91 @@ const BOUNCE_MARGIN = isMobile ? 30 : 100;
   "sepia(0) hue-rotate(0deg)"
 ];
 
-  function createFloater(src, x, y, dx, dy, index) {
-    if (imageCounts[src] >= MAX_INSTANCES_PER_IMAGE) return false;
-    
-    const imgEl = template.content.firstElementChild.cloneNode(true);
-    imgEl.src = src;
+function createFloater(src, x, y, dx, dy, index) {
+  if (imageCounts[src] >= MAX_INSTANCES_PER_IMAGE) return false;
 
-    const randomFilter = FILTERS[Math.floor(Math.random() * FILTERS.length)];
-     imgEl.style.filter = randomFilter;
-
-     // Randomize height between 160px and 260px
-    const minHeight = 150;
-    const maxHeight = 230;
-    const randomHeight = minHeight + Math.random() * (maxHeight - minHeight);
-    imgEl.style.height = `${randomHeight}px`;
-    imgEl.style.width = 'auto'; // Maintain aspect ratio
-
-  document.getElementById('floater-container').appendChild(imgEl);
-
-  const allCategories = ["Preservation", "Education", "Public"];
-const currentCategories = imageCategories[index] || [];
-
-const captionEl = document.createElement('div');
-captionEl.className = 'caption';
-
-captionEl.innerHTML = `
-  <div class="caption-row">
-    ${allCategories.map(cat => {
-      const isActive = currentCategories.includes(cat);
-      return `<span class="caption-category ${isActive ? 'active' : ''}">${cat}</span>`;
-    }).join('')}
-  </div>
-`;
-
-document.getElementById('floater-container').appendChild(captionEl);
-
-    const phaseX = Math.random() * Math.PI * 2;
-    const phaseY = Math.random() * Math.PI * 2;
-
-    const floater = {
-      el: imgEl,
-      captionEl,
-      src,
-      x,
-      y,
-      dx,
-      dy,
-      phaseX,
-      phaseY,
-      paused: false
-    };
-    floaters.push(floater);
-    imageCounts[src]++;
-
-    requestAnimationFrame(() => { imgEl.style.opacity = 1; });
-
-    imgEl.style.pointerEvents = "auto";
-
-    imgEl.addEventListener('mouseenter', () => {
-      floater.paused = true;
-      captionEl.style.opacity = 1;
-    });
-    imgEl.addEventListener('mouseleave', () => {
-      floater.paused = false;
-      captionEl.style.opacity = 0;
-    });
-
-    const url = (index !== -1) ? imageLinks[index] : 'default.html';
-   imgEl.addEventListener('click', () => {
-  document.body.classList.add('fade-out');
-  setTimeout(() => {
-    window.location.href = url;
-  }, 500); // Match your fade-out time
-});
-
-
-    return true;
+  let el;
+  if (src.endsWith(".webm")) {
+    el = document.createElement("video");
+    el.src = src;
+    el.autoplay = true;
+    el.loop = true;
+    el.muted = true;
+    el.playsInline = true;
+  } else {
+    el = document.createElement("img");
+    el.src = src;
   }
+
+  el.className = "floating";
+
+  const randomFilter = FILTERS[Math.floor(Math.random() * FILTERS.length)];
+  el.style.filter = randomFilter;
+
+  const minHeight = 150;
+  const maxHeight = 230;
+  const randomHeight = minHeight + Math.random() * (maxHeight - minHeight);
+  el.style.height = `${randomHeight}px`;
+  el.style.width = 'auto'; // Maintain aspect ratio
+
+  document.getElementById('floater-container').appendChild(el);
+
+  const currentCategories = imageCategories[index] || [];
+  const allCategories = ["Preservation", "Education", "Public"];
+
+  const captionEl = document.createElement('div');
+  captionEl.className = 'caption';
+  captionEl.innerHTML = `
+    <div class="caption-row">
+      ${allCategories.map(cat => {
+        const isActive = currentCategories.includes(cat);
+        return `<span class="caption-category ${isActive ? 'active' : ''}">${cat}</span>`;
+      }).join('')}
+    </div>
+  `;
+
+  document.getElementById('floater-container').appendChild(captionEl);
+
+  const phaseX = Math.random() * Math.PI * 2;
+  const phaseY = Math.random() * Math.PI * 2;
+
+  const floater = {
+    el,
+    captionEl,
+    src,
+    x,
+    y,
+    dx,
+    dy,
+    phaseX,
+    phaseY,
+    paused: false
+  };
+  floaters.push(floater);
+  imageCounts[src]++;
+
+  requestAnimationFrame(() => { el.style.opacity = 1; });
+  el.style.pointerEvents = "auto";
+
+  el.addEventListener('mouseenter', () => {
+    floater.paused = true;
+    captionEl.style.opacity = 1;
+  });
+  el.addEventListener('mouseleave', () => {
+    floater.paused = false;
+    captionEl.style.opacity = 0;
+  });
+
+  const url = (index !== -1) ? imageLinks[index] : 'default.html';
+  el.addEventListener('click', () => {
+    document.body.classList.add('fade-out');
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500);
+  });
+
+  return true;
+}
 
   function spawnFromEdge() {
     const src = imageSources[Math.floor(Math.random() * imageSources.length)];
