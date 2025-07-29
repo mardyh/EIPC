@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    	<link rel="stylesheet" href="perlin.css" />
   <title>Projects - Empathy in Point Clouds </title>
   <style>
     /* styling for the header title */
@@ -418,6 +420,17 @@
     <div></div>
   </div>
 </div> -->
+
+	<!-- give the canvas the ID your JS expects -->
+	<canvas id="noiseCanvas"></canvas>
+	<canvas id="canvas"></canvas>
+
+	<!-- load a real build of SimplexNoise via jsDelivr -->
+	<script src="https://cdn.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.min.js"></script>
+
+	<!-- load your perlin.js once, after the library and after the DOM -->
+	<script src="perlin.js"></script>
+  
 <div id="projects-overlay">
   <!-- Optional: You can replicate the projects page content here -->
 </div>
