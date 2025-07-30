@@ -172,6 +172,9 @@
       resize: vertical;
       width: 300px;
     }
+    form textarea {
+      height: 160px; 
+    }
     form button {
       font-family: 'Akzidenz Grotesk Light', sans-serif;
       font-size: 14px;
@@ -379,14 +382,11 @@
         <p>Open Monday to Friday<br>10:00 a.m. – 6:00 p.m.</p>
 
         <!-- Email form below original content -->
-        <div class="content-box">
-          <form action="mailto:eipc.scanlab@gmail.com" method="post" enctype="text/plain" onsubmit="alert('Thank you for your message!');">
-            <label for="name" class="mobile-hidden">Name</label>
-            <input type="text" id="name" name="Name" placeholder="Name" required />
-            <label for="name" class="mobile-hidden">Email</label>
-            <input type="text" id="name" name="Email" placeholder="Email" required />
-            <label for="name" class="mobile-hidden">Message</label>
-            <input type="text" id="name" name="Message" placeholder="Message" required />
+        <div class="content-box form-box">
+          <form action="https://formspree.io/f/yourformid" method="POST">
+            <input type="text" name="Name" placeholder="Name" required />
+            <input type="email" name="Email" placeholder="Email" required />
+            <textarea name="Message" placeholder="Message" required></textarea>
             <button type="submit">Send</button>
           </form>
         </div>
