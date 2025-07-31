@@ -204,7 +204,6 @@
       will-change: transform;
       cursor: pointer;
       mix-blend-mode: multiply;
-     /* filter: sepia(1) hue-rotate(155deg); */
     }
 
     @media (max-width: 600px) {
@@ -481,20 +480,22 @@ const isMobile = window.innerWidth <= 600;
 const BOUNCE_MARGIN = isMobile ? 30 : 100;
 
   const imageSources = [
-    "point_cloud_renders/AssembleSound_anchor_grey.webm",
-	"point_cloud_renders/AWT_anchor_grey.webm",
-	"point_cloud_renders/HillAuditorium_anchor_grey.webm",
-	"point_cloud_renders/MichiganStadium_anchor_grey60.webm",
-	"point_cloud_renders/MIIBS_anchor_grey.gif",
-	"point_cloud_renders/OR_anchor_grey.gif",
-	"point_cloud_renders/Rackham_anchor_grey.gif",
-	"point_cloud_renders/Teotihuacan_anchor_grey60.webm"
+    "point_cloud_renders/AssembleSound_anchor_color.gif",
+	"point_cloud_renders/AWT_anchor_color.gif",
+	"point_cloud_renders/HillAuditorium_anchor_color.gif",
+	"point_cloud_renders/MatthaeiBotanical_anchor_color.gif",
+	"point_cloud_renders/MichiganStadium_anchor_color.gif",
+	"point_cloud_renders/MIIBS_anchor_color.gif",
+	"point_cloud_renders/OR_anchor_color.gif",
+	"point_cloud_renders/Rackham_anchor_color",
+	"point_cloud_renders/Teotihuacan_anchor_color"
   ];
 
   const imageLinks = [
     "grace.html",
     "windtunnel.html",
     "hill.html",
+	"matthaei.html",
     "stadium.html",
     "miibs.html",
     "OR3.html",
@@ -509,7 +510,7 @@ const BOUNCE_MARGIN = isMobile ? 30 : 100;
   ["Public"],                // Stadium
   ["Preservation"],          // Hill
   ["Education"] // Hill alt
-  ["Preservation"],          // Hill
+  ["Preservation"]          // Hill
 ];
 
   const floaters = [];
@@ -519,10 +520,10 @@ const BOUNCE_MARGIN = isMobile ? 30 : 100;
   let time = 0;
 
   const FILTERS = [
-  "sepia(1) hue-rotate(150deg)",
-  "sepia(1) hue-rotate(290deg)",
-  "sepia(1) hue-rotate(0deg)",
-  "sepia(0) hue-rotate(0deg)"
+  "sepia(1) hue-rotate(150deg) saturate(200%)", //cyan
+  "sepia(1) hue-rotate(290deg) saturate(200%)", //magenta
+  "sepia(1) hue-rotate(0deg) saturate(200%)", //yellow
+  "grayscale(1)" //black
 ];
 
 function createFloater(src, x, y, dx, dy, index) {
